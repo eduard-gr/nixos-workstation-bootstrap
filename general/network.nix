@@ -4,6 +4,7 @@
 
 # Include this file in /etc/nixos/configuration.nix imports section
 # and run `nixos-rebuild switch --upgrade-all` to sync system state
+{ pkgs, ... }:
 
 {
   networking.networkmanager.enable = true;
