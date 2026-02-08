@@ -12,7 +12,6 @@
   networking.networkmanager.plugins = with pkgs; [
         networkmanager-l2tp
     ];
-  }
 
   services.dbus.packages = with pkgs; [
     networkmanager-l2tp
