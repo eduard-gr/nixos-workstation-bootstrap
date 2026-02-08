@@ -14,13 +14,17 @@
 
   #Defined in configuration.nix
   #boot.kernelPackages = pkgs.linuxPackages_latest;
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Firmware / microcode
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
+
+  swapDevices = [ {
+     device = "/dev/nvme0n1p2";
+     randomEncryption.enable = false;
+   } ];
 
   services.xserver.enable = false;
   #services.xserver.videoDrivers = [ "amdgpu" ];
@@ -104,6 +108,23 @@
       "wheel"
     ];
   };
+
+  #TODO needs to be tested
+  services.power-profiles-daemon.enable = true;
+  # Suspend first then hibernate when closing the lid
+  services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";
+  # Hibernate on power button pressed
+  services.logind.settings.Login.PowerKey = "hibernate";
+  services.logind.settings.Login.PowerKeyLongPress = "poweroff";
+
+  # Suspend first
+  boot.kernelParams = ["mem_sleep_default=deep"];
+
+  # Define time delay for hibernation
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=30m
+    SuspendState=mem
+  '';
 
   # Before changing this value read the documentation for this option
   #https://search.nixos.org/options?channel=25.11&show=system.stateVersion&query=system.stateVersion
