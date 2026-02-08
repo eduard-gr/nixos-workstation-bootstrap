@@ -8,7 +8,7 @@
 
     ./desktops/kde.nix
 
-    ./tools/command.nix
+    ./tools/common.nix
   ];
 
   networking.hostName = "l14";
