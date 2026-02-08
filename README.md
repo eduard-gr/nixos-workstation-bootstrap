@@ -1,6 +1,11 @@
 ## NixOS
 Ok, Let's see how it works.
 
+### Don't forget to turn on the wifi
+```bash
+nmtui
+```
+
 ### Make file system
 
 #### Partitions
@@ -44,3 +49,15 @@ mount -o subvol=log,$FLAGS /dev/nvme0n1p3 /mnt/var/log
 ```
 
 ### Setup NixOS
+
+#### Clon repo
+```bash
+mkdir -p /mnt/etc
+git clone...
+```
+
+#### Config
+```bash
+nixos-generate-config --root /mnt
+nixos-install
+```
