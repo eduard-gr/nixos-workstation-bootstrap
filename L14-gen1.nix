@@ -7,6 +7,8 @@
     ./general/network.nix
 
     ./desktops/kde.nix
+
+    ./tools/command.nix
   ];
 
   networking.hostName = "l14";
@@ -80,6 +82,12 @@
 
   #  fingerprint readers handling.
   services.fprintd.enable = true;
+
+  # Enable experimental features
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
