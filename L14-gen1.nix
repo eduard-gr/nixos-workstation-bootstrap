@@ -2,7 +2,6 @@
 
 {
   imports = [
-    #./hardware-configuration.nix
     ./general/i18n.nix
     ./general/pipewire.nix
     ./general/network.nix
