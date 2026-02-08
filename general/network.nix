@@ -7,9 +7,9 @@
 { config, pkgs, ... }:
 
 {
-  networking.networkmanager = {
-    enable = true;
-    plugins = with pkgs; [
+
+  networking.networkmanager.enable = true;
+  networking.networkmanager.plugins = with pkgs; [
         networkmanager-l2tp
     ];
   }
