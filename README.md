@@ -42,3 +42,5 @@ mount -o subvol=home,$FLAGS /dev/nvme0n1p3 /mnt/home
 mount -o subvol=nix,$FLAGS /dev/nvme0n1p3 /mnt/nix
 mount -o subvol=log,$FLAGS /dev/nvme0n1p3 /mnt/var/log
 ```
+
+### Setup NixOS
