@@ -40,7 +40,7 @@
       mesa
       libva
       libva-utils
-      vaapiVdpau
+      libva-vdpau-driver
       libvdpau-va-gl
       vulkan-loader
       vulkan-validation-layers
@@ -97,6 +97,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.eg = {
     isNormalUser = true;
+    initialPassword = "";
     description = "eg";
     extraGroups = [
       "networkmanager"
