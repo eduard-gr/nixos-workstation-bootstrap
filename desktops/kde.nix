@@ -10,7 +10,7 @@
 # Include this file in /etc/nixos/configuration.nix imports section
 # and run `nixos-rebuild switch --upgrade-all` to sync system state
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # KDE Plasma 6 + Wayland
@@ -27,6 +27,35 @@
         monospace = [ "Liberation Mono" ];
         emoji = [ "Twemoji" ];
       };
+    };
+  };
+
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.eg = {
+    imports = [
+      inputs.plasma-manager.homeManagerModules.plasma-manager
+    ];
+
+    programs.plasma = {
+      enable = true;
+
+      panels = [
+        {
+          location = "left";
+          height = 48;
+          widgets = [
+            "org.kde.plasma.kickoff"
+            "org.kde.plasma.taskmanager"
+            "org.kde.plasma.systemtray"
+            "org.kde.plasma.digitalclock"
+          ];
+        }
+      ];
     };
   };
 }
