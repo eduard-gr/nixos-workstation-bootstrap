@@ -9,6 +9,7 @@
     ./desktops/kde.nix
 
     ./tools/common.nix
+    ./tools/dropbox.nix
   ];
 
   networking.hostName = "l14";
