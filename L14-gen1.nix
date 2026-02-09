@@ -10,6 +10,7 @@
 
     ./tools/common.nix
     ./tools/dropbox.nix
+    ./tools/www.nix
   ];
 
   networking.hostName = "l14";
