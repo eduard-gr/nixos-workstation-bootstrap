@@ -12,7 +12,7 @@
     workspace = {
       lookAndFeel = "org.kde.breezetwilight.desktop";
       theme = "Breeze Twilight";
-      colorScheme = "BreezeDark";
+      colorScheme = "BreezeClassic";
       iconTheme = "breeze-dark";
       cursorTheme = "Breeze";
     };
