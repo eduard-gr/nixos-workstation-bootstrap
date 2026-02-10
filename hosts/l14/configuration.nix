@@ -12,7 +12,7 @@
 
     ../../tools/common.nix
     ../../tools/dropbox.nix
-    ../..//tools/www.nix
+    ../../tools/www.nix
     ../../tools/development.nix
     ../../tools/multimedia.nix
   ];
