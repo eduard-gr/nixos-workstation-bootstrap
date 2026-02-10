@@ -2,17 +2,17 @@
 
 {
   imports = [
-    ./general/i18n.nix
-    ./general/pipewire.nix
-    ./general/network.nix
+    ../general/i18n.nix
+    ../general/pipewire.nix
+    ../general/network.nix
 
-    ./desktops/kde.nix
+    ../workspace/kde.nix
 
-    ./tools/common.nix
-    ./tools/dropbox.nix
-    ./tools/www.nix
-    ./tools/development.nix
-    ./tools/multimedia.nix
+    ../tools/common.nix
+    ../tools/dropbox.nix
+    #../tools/www.nix
+    #../tools/development.nix
+    #../tools/multimedia.nix
   ];
 
   networking.hostName = "l14";
