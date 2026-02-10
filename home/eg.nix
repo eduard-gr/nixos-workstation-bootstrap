@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 {
-  home-manager.users.eg = {
+
     imports = [
       inputs.plasma-manager.homeManagerModules.plasma-manager
     ];
@@ -22,5 +22,5 @@
         }
       ];
     };
-  };
+
 }
