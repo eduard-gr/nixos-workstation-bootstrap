@@ -17,15 +17,24 @@
       cursorTheme = "Breeze";
     };
 
-
-
     panels = [
       {
         location = "left";
         height = 48;
         widgets = [
           "org.kde.plasma.kickoff"
-          "org.kde.plasma.taskmanager"
+          #"org.kde.plasma.taskmanager"
+          {
+            name = "org.kde.plasma.icontasks";
+            config = {
+              General = {
+                launchers = [
+                  "applications:org.kde.dolphin.desktop"
+                  "applications:org.kde.konsole.desktop"
+                ];
+              };
+            };
+          }
           "org.kde.plasma.systemtray"
           "org.kde.plasma.digitalclock"
         ];
