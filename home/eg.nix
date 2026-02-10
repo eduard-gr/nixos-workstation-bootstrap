@@ -10,12 +10,14 @@
     enable = true;
 
     workspace = {
-      lookAndFeel = "org.kde.breeze-twilight.desktop";
-      cursor.theme = "Breeze";
+      lookAndFeel = "org.kde.breezetwilight.desktop";
+      theme = "Breeze Twilight";
+      colorScheme = "BreezeDark";
       iconTheme = "breeze-dark";
+      cursorTheme = "Breeze";
     };
 
-    #colorScheme = "BreezeTwilight";
+
 
     panels = [
       {
