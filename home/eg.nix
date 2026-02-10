@@ -6,6 +6,10 @@
     inputs.plasma-manager.homeManagerModules.plasma-manager
   ];
 
+  /**
+   *
+   * https://github.com/nix-community/plasma-manager
+   */
   programs.plasma = {
     enable = true;
 
