@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-
   home-manager.users.eg = {
     imports = [
       inputs.plasma-manager.homeManagerModules.plasma-manager
