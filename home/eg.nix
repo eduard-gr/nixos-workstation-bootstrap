@@ -9,6 +9,14 @@
   programs.plasma = {
     enable = true;
 
+    workspace = {
+      lookAndFeel = "org.kde.breeze-twilight.desktop";
+      cursorTheme = "Breeze";
+      iconTheme = "breeze-dark";
+    };
+
+    colorScheme = "BreezeTwilight";
+
     panels = [
       {
         location = "left";
