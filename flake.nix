@@ -24,7 +24,7 @@
         inherit system;
         modules = [
           ./configuration.nix
-          ./hosts/${host}.nix
+          ./hosts/l14.nix
 
           home-manager.nixosModules.home-manager
           {
