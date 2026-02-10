@@ -10,35 +10,25 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
 
-  let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
+      nixosConfigurations.l14 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
 
-    myHost = { host }:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
         modules = [
           ./configuration.nix
           ./hosts/l14.nix
+
 
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            #home-manager.users.eg = import ./home/eg.nix;
+            home-manager.users.eg = import ./home.nix;
           }
         ];
       };
-  in
-  {
-    nixosConfigurations = {
-      l14 = myHost { host = "l14"; };
     };
-  };
-}
+  }
