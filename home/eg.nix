@@ -33,12 +33,16 @@
             config = {
               General = {
                 launchers = [
-                  "applications:firefox_firefox.desktop"
-                  "applications:chrome_chrome.desktop"
+                  "applications:google-chrome.desktop"
+                  "applications:chromium-browser.desktop"
+                  "applications:firefox.desktop"
+
                   "applications:dbeaver-ce.desktop"
+                  "applications:dbeaver.desktop"
+                  "applications:dbeaver-ce"
                   "applications:org.kde.konsole.desktop"
                   "applications:org.kde.dolphin.desktop"
-                  #"applications:chromium_chromium.desktop"
+
 
                 ];
               };
