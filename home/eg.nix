@@ -2,11 +2,21 @@
 
 {
   #Dropbox startup
-  services.dropbox.enable = true;
+  #services.dropbox.enable = true;
+  home.packages = [ pkgs.dropbox ];
 
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
   ];
+
+  xdg.autostart.enable = true;
+
+  xdg.autostart.entries = {
+    dropbox = {
+      name = "Dropbox";
+      exec = "${pkgs.dropbox}/bin/dropbox start -i";
+    };
+  };
 
   /**
    *
