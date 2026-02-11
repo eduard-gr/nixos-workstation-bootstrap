@@ -1,6 +1,8 @@
 { config, pkgs, inputs, ... }:
 
 {
+  #Dropbox startup
+  services.dropbox.enable = true;
 
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
