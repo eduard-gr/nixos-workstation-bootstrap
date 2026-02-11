@@ -1,9 +1,6 @@
 { config, pkgs, inputs, ... }:
 
 {
-  #Dropbox startup
-  #services.dropbox.enable = true;
-  #home.packages = [ pkgs.dropbox ];
 
   systemd.user.services.dropbox = {
       Unit = {
@@ -21,19 +18,6 @@
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
   ];
-
-
-
-
-  # xdg.autostart.enable = true;
-
-  # xdg.autostart.entries = {
-  #   dropbox = {
-  #     name = "Dropbox";
-  #     exec = "${pkgs.dropbox}/bin/dropbox start -i";
-  #   };
-  # };
-
 
 
   /**
@@ -81,6 +65,14 @@
         ];
       }
     ];
+
+    shortcuts = {
+      kwin = {
+        "Show Desktop Grid" = "Meta+G";
+        "Window to Next Screen" = "Meta+Left";
+        "Window to Previous Screen" = "Meta+Left";
+      };
+    };
   };
 
   home.stateVersion = "25.11";
