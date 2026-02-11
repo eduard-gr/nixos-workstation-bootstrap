@@ -21,7 +21,7 @@
       colorScheme = "BreezeClassic";
       iconTheme = "breeze-dark";
       cursorTheme = "Breeze";
-      wallpaper = "~/Dropbox/Wallpapers/ibm-retro-mainframe.jpg";
+      wallpaper = "/home/eg/Dropbox/Wallpapers/ibm-retro-mainframe.jpg";
     };
 
     panels = [
