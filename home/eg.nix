@@ -36,10 +36,7 @@
                   "applications:google-chrome.desktop"
                   "applications:chromium-browser.desktop"
                   "applications:firefox.desktop"
-
-                  "applications:dbeaver-ce.desktop"
                   "applications:dbeaver.desktop"
-                  "applications:dbeaver-ce"
                   "applications:org.kde.konsole.desktop"
                   "applications:org.kde.dolphin.desktop"
 
