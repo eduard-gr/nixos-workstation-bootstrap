@@ -33,14 +33,14 @@
             config = {
               General = {
                 launchers = [
+                  "applications:org.kde.konsole.desktop"
                   "applications:google-chrome.desktop"
                   "applications:chromium-browser.desktop"
                   "applications:firefox.desktop"
                   "applications:dbeaver.desktop"
-                  "applications:org.kde.konsole.desktop"
+                  "applications:phpstorm.desktop"
+                  "applications:postman.desktop"
                   "applications:org.kde.dolphin.desktop"
-
-
                 ];
               };
             };
