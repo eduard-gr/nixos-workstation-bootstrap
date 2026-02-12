@@ -92,22 +92,22 @@
     # This populates the userSettings "auto_install_extensions"
     extensions = [ "nix" "toml" "make" "PHP" "Java"];
 
-    userKeymaps = [
-      {
-        context = "Workspace";
-        bindings = {
-          #"ctrl-shift-t" = "workspace::NewTerminal";
-          #"copy": "editor::Copy",
-          "ctrl-c": "editor::Copy",
-          "ctrl-v": "editor::Paste",
-          "ctrl-x": "editor::Cut",
-          "ctrl-s" = "workspace::Save";
-          "ctrl-shift-f" = "workspace::SearchInWorkspace";
-        };
-      }
-    ];
+    # userKeymaps = [
+    #   {
+    #     context = "Workspace";
+    #     bindings = {
+    #       #"ctrl-shift-t" = "workspace::NewTerminal";
+    #       #"copy": "editor::Copy",
+    #       "ctrl-c": "editor::Copy",
+    #       "ctrl-v": "editor::Paste",
+    #       "ctrl-x": "editor::Cut",
+    #       "ctrl-s" = "workspace::Save";
+    #       "ctrl-shift-f" = "workspace::SearchInWorkspace";
+    #     };
+    #   }
+    # ];
 
-    mutableUserKeymaps = false;
+    # mutableUserKeymaps = false;
 
     # Everything inside of these brackets are Zed options
     userSettings = {
