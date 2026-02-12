@@ -75,12 +75,15 @@
     };
   };
 
-  # xdg.configFile."dolphinrc".text = ''
-  #   [General]
-  #   ShowTerminalPanel=true
-  #   ShowPlacesPanel=true
-  #   ViewMode=Details
-  # '';
+  xdg.configFile."dolphinrc" = {
+    force = true;
+    text = ''
+      [General]
+      ShowTerminalPanel=true
+      ShowPlacesPanel=true
+      ViewMode=Details
+    '';
+  };
 
 
   home.stateVersion = "25.11";
