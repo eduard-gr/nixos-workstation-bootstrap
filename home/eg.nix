@@ -77,7 +77,7 @@
         "Window to Previous Screen" = "Meta+Left";
         "Maximize Window" = "Meta+F";
       };
-      edit = {
+      "Standard Shortcuts" = {
         "Copy" = "Ctrl+C";
         "Cut" = "Ctrl+X";
         "Paste" = "Ctrl+V";
@@ -102,7 +102,7 @@
           "ctrl-v" = "editor::Paste";
           "ctrl-x" = "editor::Cut";
           "ctrl-s" = "workspace::Save";
-          "ctrl-shift-f" = "workspace::SearchInWorkspace";
+          #"ctrl-shift-f" = "workspace::SearchInWorkspace";
         };
       }
     ];
