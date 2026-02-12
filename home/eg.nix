@@ -36,7 +36,7 @@
       wallpaper = "/home/eg/Dropbox/Wallpapers/ibm-retro-mainframe.jpg";
     };
 
-    programs.plasma.input.keyboard.switchingPolicy = "window"
+    input.keyboard.switchingPolicy = "window"
 
     panels = [
       {
@@ -77,15 +77,15 @@
     };
   };
 
-  xdg.configFile."dolphinrc" = {
-    force = true;
-    text = ''
-      [General]
-      ShowTerminalPanel=true
-      ShowPlacesPanel=true
-      ViewMode=Details
-    '';
-  };
+  # xdg.configFile."dolphinrc" = {
+  #   force = true;
+  #   text = ''
+  #     [General]
+  #     ShowTerminalPanel=true
+  #     ShowPlacesPanel=true
+  #     ViewMode=Details
+  #   '';
+  # };
 
 
   home.stateVersion = "25.11";
