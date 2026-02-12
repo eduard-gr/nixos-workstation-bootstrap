@@ -13,12 +13,14 @@
         inputs.nixpkgs.follows = "nixpkgs";
         inputs.home-manager.follows = "home-manager";
     };
+
+    zed.url = "github:zed-industries/zed";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, zed, ... }@inputs:
   let
-
     specialArgs = { inherit inputs; };
+
   in {
     nixosConfigurations = {
 
@@ -35,7 +37,8 @@
           }
         ];
       };
-
     };
+
+    packages.${system}.zed-latest = zed.packages.${system}.default;
   };
 }

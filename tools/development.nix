@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -16,7 +16,7 @@
 
     ghex
     meld
-    zed-editor
+    inputs.zed.packages.x86_64-linux.defaul
     dbeaver-bin
     postman
 
