@@ -93,7 +93,7 @@
         "enable_preview_from_code_navigation": true
       },
       "vim_mode": true,
-      "format_on_save": true,
+      "format_on_save": "on",
       "tab_size": 4,
       "hard_tabs": true,
       "preferred_line_length": 80,
