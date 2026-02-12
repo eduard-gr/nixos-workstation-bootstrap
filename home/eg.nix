@@ -75,6 +75,8 @@
         "Show Desktop Grid" = "Meta+G";
         "Window to Next Screen" = "Meta+Left";
         "Window to Previous Screen" = "Meta+Left";
+      };
+      "Window Management" = {
         "Maximize Window" = "Meta+F";
       };
       "Edit" = {
