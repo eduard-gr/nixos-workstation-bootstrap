@@ -16,7 +16,7 @@
 
     ghex
     meld
-    zed
+    zed-editor
     dbeaver-bin
     postman
 

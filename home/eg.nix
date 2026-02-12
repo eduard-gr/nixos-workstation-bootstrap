@@ -77,6 +77,38 @@
     };
   };
 
+
+  xdg.configFile."zed/settings.json".text = ''
+    {
+      "ui_font_size": 12,
+      "buffer_font_size": 12.0,
+      "theme": {
+        "mode": "system",
+        "light": "Gruvbox Dark",
+        "dark": "One Dark"
+      },
+      "preview_tabs": {
+        "enabled": false,
+        "enable_preview_from_file_finder": true,
+        "enable_preview_from_code_navigation": true
+      },
+      "vim_mode": true,
+      "format_on_save": true,
+      "tab_size": 4,
+      "hard_tabs": true,
+      "preferred_line_length": 80,
+      "current_line_highlight": "all",
+      "show_whitespaces": "boundary",
+      "formatter": "language_server",
+      "language_overrides": {
+        "Python": {
+          "tab_size": 4,
+          "hard_tabs": true
+        }
+      }
+    }
+  '';
+
   # xdg.configFile."dolphinrc" = {
   #   force = true;
   #   text = ''
