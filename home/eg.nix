@@ -77,7 +77,7 @@
         "Window to Previous Screen" = "Meta+Left";
         "Maximize Window" = "Meta+F";
       };
-      "Standard Shortcuts" = {
+      "Edit" = {
         "Copy" = "Ctrl+C";
         "Cut" = "Ctrl+X";
         "Paste" = "Ctrl+V";
@@ -215,7 +215,7 @@
         };
       };
 
-      vim_mode = true;
+      vim_mode = false;
 
       # Tell Zed to use direnv and direnv can use a flake.nix environment
       load_direnv = "shell_hook";
