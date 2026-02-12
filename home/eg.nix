@@ -16,7 +16,7 @@
   };
 
   imports = [
-    inputs.plasma-manager.homeManagerModules.plasma-manager
+    inputs.plasma-manager.homeModules.plasma-manager
   ];
 
 
@@ -32,7 +32,9 @@
       theme = "Breeze Twilight";
       colorScheme = "BreezeClassic";
       iconTheme = "breeze-dark";
-      cursorTheme = "Breeze";
+      cursor = {
+        theme = "Breeze";
+      };
       wallpaper = "/home/eg/Dropbox/Wallpapers/ibm-retro-mainframe.jpg";
     };
 
