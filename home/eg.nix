@@ -36,7 +36,7 @@
       wallpaper = "/home/eg/Dropbox/Wallpapers/ibm-retro-mainframe.jpg";
     };
 
-    input.keyboard.switchingPolicy = "window"
+    input.keyboard.switchingPolicy = "window";
 
     panels = [
       {
