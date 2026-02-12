@@ -98,9 +98,9 @@
         bindings = {
           #"ctrl-shift-t" = "workspace::NewTerminal";
           #"copy": "editor::Copy",
-          "ctrl-c" = "editor::Copy",
-          "ctrl-v" = "editor::Paste",
-          "ctrl-x" = "editor::Cut",
+          "ctrl-c" = "editor::Copy";
+          "ctrl-v" = "editor::Paste";
+          "ctrl-x" = "editor::Cut";
           "ctrl-s" = "workspace::Save";
           "ctrl-shift-f" = "workspace::SearchInWorkspace";
         };
