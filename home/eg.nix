@@ -114,10 +114,10 @@ programs.zed-editor = {
       # ];
     };
 
-    node = {
-      path = lib.getExe pkgs.nodejs;
-      npm_path = lib.getExe' pkgs.nodejs "npm";
-    };
+#    node = {
+#      path = lib.getExe pkgs.nodejs;
+#      npm_path = lib.getExe' pkgs.nodejs "npm";
+#    };
 
     hour_format = "hour24";
     auto_update = false;
