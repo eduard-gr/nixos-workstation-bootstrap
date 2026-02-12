@@ -16,7 +16,7 @@
 
     ghex
     meld
-    inputs.zed.packages.x86_64-linux.defaul
+    inputs.zed.packages.x86_64-linux.default
     dbeaver-bin
     postman
 
