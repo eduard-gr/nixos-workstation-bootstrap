@@ -81,7 +81,7 @@
         "Copy" = "Ctrl+C";
         "Cut" = "Ctrl+X";
         "Paste" = "Ctrl+V";
-      }
+      };
     };
   };
 
@@ -92,22 +92,22 @@
     # This populates the userSettings "auto_install_extensions"
     extensions = [ "nix" "toml" "make" "PHP" "Java"];
 
-    # userKeymaps = [
-    #   {
-    #     context = "Workspace";
-    #     bindings = {
-    #       #"ctrl-shift-t" = "workspace::NewTerminal";
-    #       #"copy": "editor::Copy",
-    #       "ctrl-c": "editor::Copy",
-    #       "ctrl-v": "editor::Paste",
-    #       "ctrl-x": "editor::Cut",
-    #       "ctrl-s" = "workspace::Save";
-    #       "ctrl-shift-f" = "workspace::SearchInWorkspace";
-    #     };
-    #   }
-    # ];
+    userKeymaps = [
+      {
+        context = "Workspace";
+        bindings = {
+          #"ctrl-shift-t" = "workspace::NewTerminal";
+          #"copy": "editor::Copy",
+          "ctrl-c": "editor::Copy",
+          "ctrl-v": "editor::Paste",
+          "ctrl-x": "editor::Cut",
+          "ctrl-s" = "workspace::Save";
+          "ctrl-shift-f" = "workspace::SearchInWorkspace";
+        };
+      }
+    ];
 
-    # mutableUserKeymaps = false;
+    mutableUserKeymaps = false;
 
     # Everything inside of these brackets are Zed options
     userSettings = {
@@ -138,6 +138,7 @@
         #     model = "gpt-3.5-turbo";
         #   }
         # ];
+
       };
 
   #    node = {
@@ -203,16 +204,6 @@
       };
 
       languages = {
-        # "Elixir" = {
-        #   language_servers = [ "!lexical" "elixir-ls" "!next-ls" ];
-        #   format_on_save = {
-        #     external = {
-        #       command = "mix";
-        #       arguments = [ "format" "--stdin-filename" "{buffer_path}" "-" ];
-        #     };
-        #   };
-        # };
-
         "HEEX" = {
           language_servers = [ "!lexical" "elixir-ls" "!next-ls" ];
           format_on_save = {
