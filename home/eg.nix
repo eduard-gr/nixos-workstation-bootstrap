@@ -36,6 +36,8 @@
       wallpaper = "/home/eg/Dropbox/Wallpapers/ibm-retro-mainframe.jpg";
     };
 
+    programs.plasma.input.keyboard.switchingPolicy = "window"
+
     panels = [
       {
         location = "left";
