@@ -85,13 +85,16 @@ programs.zed-editor = {
   # This populates the userSettings "auto_install_extensions"
   extensions = [ "nix" "toml" "make" "PHP" "Java"];
 
-  previewTabs = {
-    enabled = false;
-    enable_preview_from_file_finder = true;
-    enable_keep_preview_on_code_navigation = true;
-  };
+
   # Everything inside of these brackets are Zed options
   userSettings = {
+
+    preview_tabs = {
+      enabled = false;
+      enable_preview_from_file_finder = true;
+      enable_keep_preview_on_code_navigation = true;
+    };
+
     assistant = {
       enabled = true;
       version = "2";
