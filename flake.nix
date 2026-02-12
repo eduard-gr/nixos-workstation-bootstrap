@@ -14,7 +14,7 @@
         inputs.home-manager.follows = "home-manager";
     };
 
-    zed.url = "github:zed-industries/zed";
+    #zed.url = "github:zed-industries/zed";
   };
 
   outputs = { self, nixpkgs, home-manager, plasma-manager, zed, ... }@inputs:
