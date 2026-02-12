@@ -38,7 +38,5 @@
         ];
       };
     };
-
-    packages.${system}.zed-latest = zed.packages.${system}.default;
   };
 }
