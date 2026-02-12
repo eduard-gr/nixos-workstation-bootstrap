@@ -17,7 +17,7 @@
     #zed.url = "github:zed-industries/zed";
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, zed, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, ... }@inputs:
   let
     specialArgs = { inherit inputs; };
 
