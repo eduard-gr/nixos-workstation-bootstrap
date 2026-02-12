@@ -11,6 +11,7 @@
     ../../workspace/kde.nix
 
     ../../tools/common.nix
+    ../../tools/keepass.nix
     ../../tools/dropbox.nix
     ../../tools/www.nix
     ../../tools/development.nix
