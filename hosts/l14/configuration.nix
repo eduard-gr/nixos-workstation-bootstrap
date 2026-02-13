@@ -13,6 +13,7 @@
     ../../tools/common.nix
     ../../tools/keepass.nix
     ../../tools/dropbox.nix
+    ../../tools/docker.nix
     ../../tools/www.nix
     ../../tools/development.nix
     ../../tools/multimedia.nix
@@ -120,6 +121,8 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
+
     ];
   };
 

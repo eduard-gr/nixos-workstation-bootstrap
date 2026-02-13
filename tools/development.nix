@@ -6,7 +6,6 @@
     javaPackages.compiler.openjdk25
     maven
     go
-
     python314
 
     php85
@@ -24,4 +23,6 @@
     jetbrains.phpstorm
     jetbrains.idea
   ];
+
+
 }
