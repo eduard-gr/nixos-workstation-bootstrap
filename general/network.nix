@@ -23,4 +23,6 @@
     ppp
     xl2tpd
   ];
+
+  environment.etc.hosts.enable = false;
 }
