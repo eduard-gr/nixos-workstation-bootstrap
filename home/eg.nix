@@ -28,8 +28,10 @@
     enable = true;
 
     session = {
-      general = false;
-      #sessionRestore = false;
+      #general = false;
+      sessionRestore = {
+        restoreOpenApplicationsOnLogin = "startWithEmptySession";
+      };
     };
 
     workspace = {
