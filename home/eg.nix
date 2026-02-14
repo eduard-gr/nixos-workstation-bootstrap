@@ -80,9 +80,12 @@
     shortcuts = {
       kwin = {
         "Show Desktop Grid" = "Meta+G";
-        "Window to Next Screen" = "Meta+Left";
+        "Window to Next Screen" = "Meta+Right";
         "Window to Previous Screen" = "Meta+Left";
+
         "Window Maximize" = "Meta+F";
+        "Maximize Window" = "Meta+F";
+
       };
 
       klipper = {
