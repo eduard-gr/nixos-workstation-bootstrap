@@ -28,7 +28,8 @@
     enable = true;
 
     session = {
-      restoreSession = false;
+      general = false;
+      #sessionRestore = false;
     };
 
     workspace = {
