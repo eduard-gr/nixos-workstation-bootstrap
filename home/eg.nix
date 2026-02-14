@@ -27,6 +27,10 @@
   programs.plasma = {
     enable = true;
 
+    session = {
+      restoreSession = false;
+    };
+
     workspace = {
       lookAndFeel = "org.kde.breezetwilight.desktop";
       theme = "Breeze Twilight";
