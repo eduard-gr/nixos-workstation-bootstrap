@@ -82,7 +82,7 @@
         "Show Desktop Grid" = "Meta+G";
         "Window to Next Screen" = "Meta+Left";
         "Window to Previous Screen" = "Meta+Left";
-        "Maximize Window" = "Meta+F";
+        "Window Maximize" = "Meta+F";
       };
 
       klipper = {
