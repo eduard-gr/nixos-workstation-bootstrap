@@ -4,7 +4,8 @@
   home = {
     stateVersion = "25.11";
     packages = [
-        pkgs.kdePackages.polonium
+        #pkgs.kdePackages.polonium
+        pkgs.libsForQt5.polonium
       ];
   };
 
