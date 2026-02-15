@@ -1,6 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 {
+  home.stateVersion = "25.11";
 
   systemd.user.services.dropbox = {
       Unit = {
@@ -84,7 +85,7 @@
         "Window to Previous Screen" = "Meta+Left";
 
         #"Window Maximize" = "Meta+F";
-        #"Maximize Window" = "Meta+F";
+        "Maximize Window" = "Meta+F";
       };
 
       # klipper = {
@@ -255,5 +256,5 @@
   # };
 
 
-  home.stateVersion = "25.11";
+
 }
