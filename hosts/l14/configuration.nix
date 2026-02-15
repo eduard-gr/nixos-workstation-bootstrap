@@ -16,6 +16,7 @@
     ../../tools/docker.nix
     ../../tools/www.nix
     ../../tools/development.nix
+    ../../tools/libreoffice.nix
     ../../tools/multimedia.nix
   ];
 
