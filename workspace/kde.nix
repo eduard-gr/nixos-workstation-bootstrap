@@ -15,6 +15,7 @@
 {
   # KDE Plasma 6 + Wayland
   services.desktopManager.plasma6.enable = true;
+
   environment.systemPackages = with pkgs; [
     adwaita-icon-theme
     hicolor-icon-theme
