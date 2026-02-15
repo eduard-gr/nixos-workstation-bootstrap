@@ -28,9 +28,9 @@
     extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
   };
 
-  environment.sessionVariables = {
-    SAL_USE_VCLPLUGIN = "kf5";
-  };
+  # environment.sessionVariables = {
+  #   SAL_USE_VCLPLUGIN = "kf5";
+  # };
 
   # https://wiki.nixos.org/wiki/Fonts
   fonts = {
