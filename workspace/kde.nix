@@ -29,7 +29,7 @@
   };
 
   environment.sessionVariables = {
-    SAL_USE_VCLPLUGIN = "qt6 libreoffice"
+    SAL_USE_VCLPLUGIN = "qt6 libreoffice";
   };
 
   # https://wiki.nixos.org/wiki/Fonts
