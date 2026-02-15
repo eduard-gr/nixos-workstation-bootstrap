@@ -1,7 +1,12 @@
 { config, pkgs, inputs, ... }:
 
 {
-  home.stateVersion = "25.11";
+  home = {
+    stateVersion = "25.11";
+    packages = [
+        pkgs.kdePackages.polonium
+      ];
+  };
 
   systemd.user.services.dropbox = {
       Unit = {
@@ -46,6 +51,10 @@
       wallpaper = "/home/eg/Dropbox/Wallpapers/ibm-retro-mainframe.jpg";
     };
 
+    kwin = {
+      scripts.polonium.enable = true;
+    };
+
     input.keyboard.switchingPolicy = "window";
 
     panels = [
@@ -80,7 +89,12 @@
 
     shortcuts = {
       kwin = {
+        "Polonium: Toggle Tiling" = "Meta+T";
+
         "Show Desktop Grid" = "Meta+G";
+        "Window Quick Tile Right" = "";
+        "Window Quick Tile Left" = "";
+
         "Window to Next Screen" = "Meta+Right";
         "Window to Previous Screen" = "Meta+Left";
 
