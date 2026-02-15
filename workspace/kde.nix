@@ -28,10 +28,9 @@
     extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
   };
 
-
-  # environment.sessionVariables = {
-  #   SAL_USE_VCLPLUGIN = "qt6 libreoffice"
-  # };
+  environment.sessionVariables = {
+    SAL_USE_VCLPLUGIN = "qt6 libreoffice"
+  };
 
   # https://wiki.nixos.org/wiki/Fonts
   fonts = {
