@@ -18,13 +18,19 @@
 
   environment.systemPackages = with pkgs; [
     adwaita-icon-theme
-    hicolor-icon-theme
-    kdePackages.qt6ct
     kdePackages.breeze-icons
+    hicolor-icon-theme
+    #kdePackages.qt6ct
   ];
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+  };
+
+
   # environment.sessionVariables = {
-  #   QT_QPA_PLATFORMTHEME = "qt6ct";
+  #   SAL_USE_VCLPLUGIN = "qt6 libreoffice"
   # };
 
   # https://wiki.nixos.org/wiki/Fonts
