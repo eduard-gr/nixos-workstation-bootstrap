@@ -3,10 +3,9 @@
 {
   home = {
     stateVersion = "25.11";
-    #packages = [
-        #pkgs.kdePackages.polonium
-        #pkgs.libsForQt5.polonium
-    #];
+    packages = [
+      pkgs.polonium
+    ];
   };
 
   systemd.user.services.dropbox = {
