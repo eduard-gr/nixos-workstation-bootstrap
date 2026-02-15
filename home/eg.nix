@@ -84,8 +84,8 @@
         "Window to Next Screen" = "Meta+Right";
         "Window to Previous Screen" = "Meta+Left";
 
-        #"Window Maximize" = "Meta+F";
-        "Maximize Window" = "Meta+F";
+        "Window Maximize" = "Meta+F";
+        "Maximize Window" = "";
       };
 
       # klipper = {
