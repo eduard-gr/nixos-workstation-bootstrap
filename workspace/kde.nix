@@ -15,6 +15,16 @@
 {
   # KDE Plasma 6 + Wayland
   services.desktopManager.plasma6.enable = true;
+  environment.systemPackages = with pkgs; [
+    adwaita-icon-theme
+    hicolor-icon-theme
+    kdePackages.qt6ct
+    kdePackages.breeze-icons
+  ];
+
+  # environment.sessionVariables = {
+  #   QT_QPA_PLATFORMTHEME = "qt6ct";
+  # };
 
   # https://wiki.nixos.org/wiki/Fonts
   fonts = {
