@@ -52,7 +52,7 @@
     };
 
     kwin = {
-      scripts.polonium.enable = true;
+      scripts.polonium.enable = false;
     };
 
     input.keyboard.switchingPolicy = "window";
