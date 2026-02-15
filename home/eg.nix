@@ -102,6 +102,10 @@
         "Maximize Window" = "";
       };
 
+      konsole = {
+        "Launch Konsole" = "Meta+Enter";
+      };
+
       # klipper = {
       #   "Copy" = "Ctrl+C";
       #   "Cut" = "Ctrl+X";
