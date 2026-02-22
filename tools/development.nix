@@ -24,5 +24,10 @@
     jetbrains.idea
   ];
 
+services = {
+  nginx.enable = false;
+  phpfpm.enable = false;
+};
+
 
 }
