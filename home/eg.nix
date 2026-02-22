@@ -142,6 +142,8 @@
       }
     ];
 
+    relative_line_numbers = "enabled";
+
     mutableUserKeymaps = false;
 
     # Everything inside of these brackets are Zed options
@@ -181,7 +183,10 @@
   #      npm_path = lib.getExe' pkgs.nodejs "npm";
   #    };
 
-      hour_format = "hour24";
+      journal ={
+        hour_format = "hour24";
+      };
+
       auto_update = false;
 
       show_completions_on_input = true;
@@ -190,12 +195,22 @@
       auto_signature_help = true;
       show_signature_help_after_edits = true;
 
+      jsx_tag_auto_close = {
+        enabled = true;
+      };
+
       inlay_hints = {
         enabled = true;
         show_parameter_hints = true;
         show_type_hints = true;
         show_other_hints = true;
       };
+
+      vim_mode = false;
+
+      # Tell Zed to use direnv and direnv can use a flake.nix environment
+      load_direnv = "shell_hook";
+      base_keymap = "VSCode";
 
 
       terminal = {
@@ -228,10 +243,53 @@
         working_directory = "current_project_directory";
       };
 
-      lsp = {
-        php = {
-          language_servers = ["intelephense"];
+      languages = {
+        PHP = {
+          tab_size = 4;
+          hard_tabs = true;
+          language_servers = [
+            "intelephense"
+            "phptools"
+            "!phpactor"
+          ];
         };
+
+        JSON = {
+          tab_size = 4;
+          hard_tabs = true;
+        };
+
+        Python = {
+          tab_size = 4;
+          formatter = "language_server";
+          format_on_save = "on";
+        };
+
+        JavaScript = {
+          tab_size = 2;
+          formatter = {
+            external = {
+              command = "prettier";
+              arguments = [
+                  "--stdin-filepath"
+                  "{buffer_path}"
+              ];
+            };
+          };
+        };
+
+        "HEEX" = {
+          language_servers = [ "!lexical" "elixir-ls" "!next-ls" ];
+          format_on_save = {
+            external = {
+              command = "mix";
+              arguments = [ "format" "--stdin-filename" "{buffer_path}" "-" ];
+            };
+          };
+        };
+      };
+
+      lsp = {
         rust-analyzer = {
           binary = {
             # path = lib.getExe pkgs.rust-analyzer;
@@ -244,26 +302,7 @@
             path_lookup = true;
           };
         };
-
       };
-
-      languages = {
-        "HEEX" = {
-          language_servers = [ "!lexical" "elixir-ls" "!next-ls" ];
-          format_on_save = {
-            external = {
-              command = "mix";
-              arguments = [ "format" "--stdin-filename" "{buffer_path}" "-" ];
-            };
-          };
-        };
-      };
-
-      vim_mode = false;
-
-      # Tell Zed to use direnv and direnv can use a flake.nix environment
-      load_direnv = "shell_hook";
-      base_keymap = "VSCode";
 
       theme = {
         mode = "system";
