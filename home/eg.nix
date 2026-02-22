@@ -142,12 +142,11 @@
       }
     ];
 
-    relative_line_numbers = "enabled";
-
     mutableUserKeymaps = false;
 
     # Everything inside of these brackets are Zed options
     userSettings = {
+      relative_line_numbers = "enabled";
 
       preview_tabs = {
         enabled = false;
