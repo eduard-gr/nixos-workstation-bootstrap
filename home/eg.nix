@@ -5,7 +5,7 @@
     stateVersion = "25.11";
     packages = [
       pkgs.polonium
-      nixd
+      pkgs.nixd
     ];
   };
 
