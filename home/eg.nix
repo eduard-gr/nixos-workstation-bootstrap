@@ -229,7 +229,7 @@
 
       lsp = {
         php = {
-          language_servers = ["intelephense"]
+          language_servers = ["intelephense"];
         };
         rust-analyzer = {
           binary = {
