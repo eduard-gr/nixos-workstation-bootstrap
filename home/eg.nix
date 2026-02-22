@@ -146,7 +146,7 @@
 
     # Everything inside of these brackets are Zed options
     userSettings = {
-      relative_line_numbers = "enabled";
+      #relative_line_numbers = "enabled";
 
       preview_tabs = {
         enabled = false;
