@@ -247,9 +247,9 @@
           tab_size = 4;
           hard_tabs = true;
           language_servers = [
+            "phpactor"
             "intelephense"
-            "phptools"
-            "!phpactor"
+            "!phptools"
           ];
         };
 
@@ -286,19 +286,39 @@
             };
           };
         };
-      };
 
-      lsp = {
-        rust-analyzer = {
+        Nix = {
           binary = {
-            # path = lib.getExe pkgs.rust-analyzer;
             path_lookup = true;
           };
         };
+      };
 
-        nix = {
-          binary = {
-            path_lookup = true;
+      lsp = {
+        intelephense = {
+        settings = {
+          files = {
+            "associations" = [
+                "**/*.php"
+                "**/*.ctp"];
+
+            "exclude" = [
+              "**/.git/**"
+              "**/node_modules/**"
+              "**/vendor/**"
+              "**/vendors/**"
+            ];
+          };
+          diagnostics = {
+              typeErrors = true;
+              undefinedClassConstants = true;
+              undefinedConstants = true;
+              undefinedFunctions = true;
+              undefinedMethods = true;
+              undefinedProperties = true;
+              undefinedSymbols = true;
+              undefinedTypes = true;
+            };
           };
         };
       };
