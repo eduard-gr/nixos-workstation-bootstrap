@@ -67,6 +67,7 @@
           {
             name = "org.kde.plasma.icontasks";
             config = {
+              behavior.grouping.method = "none";
               General = {
                 launchers = [
                   "applications:org.kde.konsole.desktop"
