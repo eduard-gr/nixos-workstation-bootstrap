@@ -26,7 +26,7 @@
 
 services = {
   nginx.enable = false;
-  phpfpm.enable = false;
+  httpd.enable = false;
 };
 
 
