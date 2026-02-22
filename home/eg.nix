@@ -121,7 +121,7 @@
     enable = true;
 
     # This populates the userSettings "auto_install_extensions"
-    extensions = [ "nix" "toml" "make" "PHP" "Java"];
+    extensions = [ "nix" "toml" "make" "php" "java" "dockerfile" "html" "xml"];
 
     userKeymaps = [
       {
@@ -133,6 +133,9 @@
           "ctrl-v" = "editor::Paste";
           "ctrl-x" = "editor::Cut";
           "ctrl-s" = "workspace::Save";
+          "ctrl-shift-u" = "editor::ConvertToOppositeCase";
+          "ctrl-shift-f6" = "editor::Rename";
+          "Ctrl-+" = "editor::ToggleCodeActions";
           #"ctrl-shift-f" = "workspace::SearchInWorkspace";
         };
       }
@@ -180,6 +183,20 @@
       hour_format = "hour24";
       auto_update = false;
 
+      show_completions_on_input = true;
+      show_completion_documentation = true;
+
+      auto_signature_help = true;
+      show_signature_help_after_edits = true;
+
+      inlay_hints = {
+        enabled = true;
+        show_parameter_hints = true;
+        show_type_hints = true;
+        show_other_hints = true;
+      };
+
+
       terminal = {
         alternate_scroll = "off";
         blinking = "off";
@@ -205,12 +222,15 @@
         #   program = "zsh";
         # };
         toolbar = {
-          title = true;
+          # title = true;
         };
         working_directory = "current_project_directory";
       };
 
       lsp = {
+        php = {
+          language_servers = ["intelephense"]
+        };
         rust-analyzer = {
           binary = {
             # path = lib.getExe pkgs.rust-analyzer;
@@ -224,14 +244,6 @@
           };
         };
 
-        elixir-ls = {
-          binary = {
-            path_lookup = true;
-          };
-          settings = {
-            dialyzerEnabled = true;
-          };
-        };
       };
 
       languages = {
