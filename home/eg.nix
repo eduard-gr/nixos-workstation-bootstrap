@@ -122,7 +122,18 @@
     enable = true;
 
     # This populates the userSettings "auto_install_extensions"
-    extensions = [ "nix" "toml" "make" "php" "java" "dockerfile" "html" "xml"];
+    extensions = [
+      "nix"
+      "toml"
+      "make"
+      "php"
+      "java"
+      "dockerfile"
+      "html"
+      "xml"
+      "Elixir"
+      "HEEX"
+    ];
 
     userKeymaps = [
       {

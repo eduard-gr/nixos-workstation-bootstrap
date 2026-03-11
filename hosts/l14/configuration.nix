@@ -18,6 +18,7 @@
     ../../tools/development.nix
     ../../tools/libreoffice.nix
     ../../tools/multimedia.nix
+    ../../tools/3d.nix
   ];
 
   # Use latest kernel.
