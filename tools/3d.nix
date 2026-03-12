@@ -7,5 +7,6 @@
     freecad
     qidi-slicer-bin
     LycheeSlicer
+    orca-slicer
   ];
 }
