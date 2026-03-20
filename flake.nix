@@ -16,7 +16,6 @@
 
     atuin = {
       url = "github:atuinsh/atuin";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     #zed.url = "github:zed-industries/zed";

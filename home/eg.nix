@@ -26,6 +26,8 @@
     inputs.plasma-manager.homeModules.plasma-manager
   ];
 
+  programs.bash.enable = true;
+
   programs.atuin = {
     enable = true;
 
