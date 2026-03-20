@@ -139,10 +139,17 @@
   boot.kernelParams = ["mem_sleep_default=deep"];
 
   # Define time delay for hibernation
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=30m
-    SuspendState=mem
-  '';
+  # systemd.sleep.extraConfig = ''
+  #   HibernateDelaySec=30m
+  #   SuspendState=mem
+  # '';
+  systemd.sleep.settings = {
+    Sleep = {
+      HibernateDelaySec = "30m";
+      SuspendState = "mem";
+    };
+  };
+
 
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.11"; # Did you read the comment?
