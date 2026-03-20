@@ -6,7 +6,7 @@
   environment.systemPackages = with pkgs; [
     freecad
     qidi-slicer-bin
-    LycheeSlicer
+    lycheeslicer
     orca-slicer
   ];
 }
