@@ -31,6 +31,6 @@
     mc
     nmap
     wget
-    #atuin
+    atuin
   ];
 }
