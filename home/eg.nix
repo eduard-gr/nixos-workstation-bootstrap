@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   home = {
@@ -26,6 +26,15 @@
     inputs.plasma-manager.homeModules.plasma-manager
   ];
 
+  programs.atuin = {
+    enable = true;
+
+    settings = {
+      auto_sync = true;
+      sync_frequency = "10m";
+      sync_address = "https://api.atuin.sh"; # или свой сервер
+    };
+  };
 
   /**
    *
