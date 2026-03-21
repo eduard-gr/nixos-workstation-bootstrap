@@ -53,6 +53,7 @@
     settings = {
       records = true;
       auto_sync = true;
+      filter_mode = "global";
       sync_frequency = "10m";
       sync_address = "https://api.atuin.sh"; # или свой сервер
     };
