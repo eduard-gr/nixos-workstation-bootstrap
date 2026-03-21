@@ -29,7 +29,7 @@
   programs.bash.enable = true;
 
   programs.atuin = {
-    enable = false;
+    enable = true;
 
     settings = {
       records = true;
