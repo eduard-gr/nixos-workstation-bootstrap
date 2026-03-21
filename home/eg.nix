@@ -28,7 +28,7 @@
 
   programs.bash.enable = true;
 
-  programs.xdg = {
+  xdg = {
     enable = true;
 
     desktopEntries.lycheeslicer-url = {
