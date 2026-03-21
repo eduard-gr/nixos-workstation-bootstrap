@@ -2,19 +2,19 @@
 
 {
   environment.systemPackages = with pkgs; [
-    php83
+    (php83.withExtensions ({ enabled, all }: enabled ++ [
+      all.pdo
+      all.pdo_pgsql
+      all.mbstring
+      all.opcache
+      all.pgsql
+      all.intl
+      all.zip
+      all.curl
+      all.xsl
+      all.redis
+      all.amqp
+    ]))
     php83Packages.composer
-    php83Extensions.pdo
-    php83Extensions.pdo_pgsql
-    php83Extensions.mbstring
-    php83Extensions.opcache
-    php83Extensions.pgsql
-    php83Extensions.intl
-    php83Extensions.zip
-    php83Extensions.curl
-    php83Extensions.xsl
-    php83Extensions.xsl
-    php83Extensions.redis
-    php83Extensions.amqp
   ];
 }
