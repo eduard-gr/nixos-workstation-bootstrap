@@ -29,9 +29,10 @@
   programs.bash.enable = true;
 
   programs.atuin = {
-    enable = true;
+    enable = false;
 
     settings = {
+      records = true;
       auto_sync = true;
       sync_frequency = "10m";
       sync_address = "https://api.atuin.sh"; # или свой сервер
