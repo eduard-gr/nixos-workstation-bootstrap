@@ -34,10 +34,13 @@
           ./hosts/l14/configuration.nix
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.eg = import ./home/eg.nix;
+            home-manager = {
+              backupFileExtension = true;
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = { inherit inputs; };
+              users.eg = import ./home/eg.nix;
+            };
           }
         ];
       };
