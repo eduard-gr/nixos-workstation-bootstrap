@@ -35,7 +35,7 @@
           home-manager.nixosModules.home-manager
           {
             home-manager = {
-              backupFileExtension = true;
+              backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs; };
