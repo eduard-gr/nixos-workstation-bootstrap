@@ -57,10 +57,10 @@
 
       defaultApplications = {
         "x-scheme-handler/lycheeslicer" = [ "lycheeslicer-url.desktop" ];
-        "inode/directory" = ["dev.zed.Zed.desktop"]
-        "text/html" = ["google-chrome.desktop"]
-        "x-scheme-handler/http" = ["google-chrome.desktop"]
-        "x-scheme-handler/https" = ["google-chrome.desktop"]
+        "inode/directory" = ["dev.zed.Zed.desktop"];
+        "text/html" = ["google-chrome.desktop"];
+        "x-scheme-handler/http" = ["google-chrome.desktop"];
+        "x-scheme-handler/https" = ["google-chrome.desktop"];
         "x-scheme-handler/qidislicer" = ["QIDISlicerURLProtocol.desktop"];
       };
     };
