@@ -28,6 +28,25 @@
 
   programs.bash.enable = true;
 
+  programs.xdg = {
+    enable = true;
+
+    desktopEntries.lycheeslicer-url = {
+      name = "Lychee Slicer URL Handler";
+      type = "Application";
+      exec = "lycheeslicer %u";
+      terminal = false;
+      noDisplay = true;
+      mimeType = [ "x-scheme-handler/lycheeslicer" ];
+    };
+
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "x-scheme-handler/lycheeslicer" = [ "lycheeslicer-url.desktop" ];
+      };
+  };
+
   programs.atuin = {
     enable = true;
 
