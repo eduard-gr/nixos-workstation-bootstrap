@@ -8,10 +8,18 @@
     go
     python314
 
-    php85
-    php85Packages.composer
-    php85Extensions.pdo
-    php85Extensions.pdo_pgsql
+    php83
+    php83Packages.composer
+    php83Extensions.pdo
+    php83Extensions.pdo_pgsql
+    php83Extensions.mbstring
+    php83Extensions.opcache
+    php83Extensions.pgsql
+    php83Extensions.intl
+    php83Extensions.zip
+    php83Extensions.curl
+    php83Extensions.xsl
+    php83Extensions.xsl
 
     ghex
     meld
