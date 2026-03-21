@@ -45,6 +45,7 @@
       defaultApplications = {
         "x-scheme-handler/lycheeslicer" = [ "lycheeslicer-url.desktop" ];
       };
+    };
   };
 
   programs.atuin = {
