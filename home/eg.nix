@@ -1,6 +1,9 @@
 { pkgs, inputs, ... }:
 
 {
+
+  backupFileExtension = "backup";
+
   home = {
     stateVersion = "25.11";
     packages = [
@@ -42,8 +45,23 @@
 
     mimeApps = {
       enable = true;
+
+      associations.added = {
+        "inode/directory" = [ "dev.zed.Zed.desktop" ];
+        "x-scheme-handler/qidislicer" = [ "QIDISlicerURLProtocol.desktop" ];
+        "x-scheme-handler/lycheeslicer" = [
+          "lycheeslicer-url.desktop"
+          "LycheeSlicer.desktop"
+        ];
+      };
+
       defaultApplications = {
         "x-scheme-handler/lycheeslicer" = [ "lycheeslicer-url.desktop" ];
+        "inode/directory" = ["dev.zed.Zed.desktop"]
+        "text/html" = ["google-chrome.desktop"]
+        "x-scheme-handler/http" = ["google-chrome.desktop"]
+        "x-scheme-handler/https" = ["google-chrome.desktop"]
+        "x-scheme-handler/qidislicer" = ["QIDISlicerURLProtocol.desktop"];
       };
     };
   };
