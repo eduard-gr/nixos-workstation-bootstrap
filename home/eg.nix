@@ -9,8 +9,8 @@
 
       # packages requred for qidi-studio
       qidi-studio
-      pkgs.webkitgtk_4_1
-      pkgs.libtiff
+      #pkgs.webkitgtk_4_1
+      #pkgs.libtiff
     ];
   };
 

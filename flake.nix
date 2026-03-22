@@ -36,6 +36,17 @@
         url = "https://github.com/QIDITECH/QIDIStudio/releases/download/v2.05.01.52/QIDIStudio_v02.05.01.52_Ubuntu24.AppImage";
         hash = "sha256:6e342c2d6b81700f6b5b05fc5080a087448a277cd07b5a1959ca9fedbba87ba1";
       };
+
+      extraPkgs = pkgs: with pkgs; [
+        #cacert
+        #curl
+        #glib
+        #glib-networking
+        webkitgtk_4_1
+        #gst_all_1.gst-plugins-base
+        #gst_all_1.gst-plugins-good
+        #gst_all_1.gst-plugins-bad
+      ];
     };
 
     specialArgs = {
