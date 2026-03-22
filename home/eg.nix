@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, qidi-studio, ... }:
 
 {
   home = {
@@ -6,6 +6,7 @@
     packages = [
       pkgs.polonium
       pkgs.nixd
+      qidi-studio
     ];
   };
 
