@@ -7,9 +7,10 @@
       pkgs.polonium
       pkgs.nixd
 
-      # pkgs.webkitgtk_4_1 neead for qidi-studio
+      # packages requred for qidi-studio
       qidi-studio
       pkgs.webkitgtk_4_1
+      pkgs.libtiff
     ];
   };
 

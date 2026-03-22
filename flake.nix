@@ -33,8 +33,8 @@
       version = "2.05.01.52";
 
       src = pkgs.fetchurl {
-        url = "https://github.com/QIDITECH/QIDIStudio/releases/download/v2.05.01.52/QIDIStudio_v02.05.01.52_Ubuntu24.AppImage";
-        hash = "sha256:6e342c2d6b81700f6b5b05fc5080a087448a277cd07b5a1959ca9fedbba87ba1";
+        url = "https://github.com/QIDITECH/QIDIStudio/releases/download/v2.05.01.52/QIDIStudio_v02.05.01.52_Ubuntu22.AppImage";
+        hash = "sha256:c212caf4fd53f7a5e195fd97cfb6acc4af2cd0ec72755e44a710024e76a4ba11";
       };
     };
 
