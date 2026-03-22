@@ -29,7 +29,7 @@
     };
 
     qidi-studio = pkgs.appimageTools.wrapType2 {
-      name = "qidi-studio";
+      pname = "qidi-studio";
       version = "2.05.01.52";
 
       src = pkgs.fetchurl {
