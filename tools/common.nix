@@ -31,5 +31,7 @@
     mc
     nmap
     wget
+    appimage-run
+
   ];
 }
