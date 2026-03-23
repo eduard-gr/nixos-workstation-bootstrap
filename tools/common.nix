@@ -32,6 +32,6 @@
     nmap
     wget
     appimage-run
-
+    openssl_3_5
   ];
 }
