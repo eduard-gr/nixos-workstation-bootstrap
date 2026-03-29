@@ -6,8 +6,6 @@
 { pkgs, ... }:
 
 {
-
-
   # Not enabled by default, even though some nixos utilities rely on it?
   programs.git = {
     enable = true;

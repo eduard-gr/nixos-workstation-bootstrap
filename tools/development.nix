@@ -15,6 +15,8 @@
     dbeaver-bin
     postman
 
+    jetbrains.goland
+    jetbrains.pycharm
     jetbrains.phpstorm
     jetbrains.idea
   ];
