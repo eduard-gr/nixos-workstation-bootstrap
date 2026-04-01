@@ -20,6 +20,7 @@
     ../../tools/libreoffice.nix
     ../../tools/multimedia.nix
     ../../tools/3d.nix
+    ../../tools/kvm.nix
   ];
 
   # Use latest kernel.
@@ -125,7 +126,7 @@
       "networkmanager"
       "wheel"
       "docker"
-
+      "libvirtd"
     ];
   };
 
