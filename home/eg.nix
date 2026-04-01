@@ -190,6 +190,7 @@
       "xml"
       "Elixir"
       "HEEX"
+      "sql"
     ];
 
     userKeymaps = [
