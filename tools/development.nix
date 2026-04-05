@@ -6,7 +6,6 @@
     javaPackages.compiler.openjdk25
     maven
     go
-    python314
 
     ghex
     meld

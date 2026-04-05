@@ -21,6 +21,7 @@
     ../../tools/multimedia.nix
     ../../tools/3d.nix
     ../../tools/kvm.nix
+    ../../tools/python.nix
   ];
 
   # Use latest kernel.
