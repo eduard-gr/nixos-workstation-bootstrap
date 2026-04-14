@@ -18,6 +18,7 @@
 
     cursor-cli
     code-cursor
+    antigravity
 
 
     jetbrains.goland
