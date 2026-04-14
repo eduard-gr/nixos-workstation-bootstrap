@@ -16,6 +16,10 @@
 
     claude-code
 
+    cursor-cli
+    code-cursor
+
+
     jetbrains.goland
     jetbrains.pycharm
     jetbrains.phpstorm
