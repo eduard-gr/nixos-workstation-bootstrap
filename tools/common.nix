@@ -32,5 +32,7 @@
     appimage-run
     openssl_3_5
     dig
+    unixtools.netstat
+
   ];
 }
