@@ -10,6 +10,7 @@
   };
 
   networking.firewall = {
+    trustedInterfaces = [ "docker0" ];
     allowedTCPPorts = [
       5432
       5672
