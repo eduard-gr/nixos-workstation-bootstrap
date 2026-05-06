@@ -34,5 +34,6 @@
     dig
     unixtools.netstat
     lsyncd
+    usbutils
   ];
 }

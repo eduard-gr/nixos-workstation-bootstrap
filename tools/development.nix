@@ -20,9 +20,6 @@
     code-cursor
     antigravity
 
-    android-tools
-    android-studio-full
-
     jetbrains.goland
     jetbrains.pycharm
     jetbrains.phpstorm
