@@ -123,8 +123,6 @@
     options = "--delete-older-than 7d";
   };
 
-  programs.adb.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.eg = {
     isNormalUser = true;
