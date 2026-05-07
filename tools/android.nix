@@ -74,18 +74,18 @@
     steam-run
   ];
 
-  # environment.variables = {
+  environment.variables = {
 
-  #     ANDROID_HOME = "$HOME/android/sdk";
-  #     ANDROID_SDK_ROOT = "$HOME/android/sdk";
-  #     ANDROID_AVD_HOME = "$HOME/.config/.android/avd";
+      ANDROID_HOME = "$HOME/android/sdk";
+      ANDROID_SDK_ROOT = "$HOME/android/sdk";
+      ANDROID_AVD_HOME = "$HOME/.config/.android/avd";
 
-  #     PATH = [
-  #       "$HOME/android/sdk/platform-tools"
-  #       "$HOME/android/sdk/emulator"
-  #       "$HOME/android/sdk/cmdline-tools/latest/bin"
-  #     ];
-  # };
+      PATH = [
+        "$HOME/android/sdk/platform-tools"
+        "$HOME/android/sdk/emulator"
+        "$HOME/android/sdk/cmdline-tools/latest/bin"
+      ];
+  };
 
   # environment.shellAliases = {
   #     emulator = "QT_QPA_PLATFORM=xcb steam-run $HOME/android/sdk/emulator/emulator -gpu swiftshader_indirect";
