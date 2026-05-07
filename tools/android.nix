@@ -38,6 +38,7 @@
       libXrandr
       libXres
       libXv
+      libxkbcommon
 
       libbsd
       nss
@@ -46,6 +47,7 @@
       at-spi2-atk
       cups
       libdrm
+
       libpulseaudio
       libuuid
       libpng
@@ -53,7 +55,7 @@
       zlib
       mesa
       libdrm
-      libxkbcommon
+
       vulkan-loader
     ];
 
@@ -65,6 +67,8 @@
   ];
 
   environment.variables = {
+      QT_QPA_PLATFORM = "xcb";
+
       ANDROID_HOME = "$HOME/android/sdk";
       ANDROID_SDK_ROOT = "$HOME/android/sdk";
       ANDROID_AVD_HOME = "$HOME/.config/.android/avd";
