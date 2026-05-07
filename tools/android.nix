@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   my-android-sdk = pkgs.androidenv.composeAndroidPackages {
-    platformVersions = [ "34" "35" "37" ];
+    platformVersions = [ "34" "35" "36" "37" ];
     abiVersions = [ "x86_64" ];
     includeSystemImages = true;
     includeEmulator = true;
@@ -76,6 +76,8 @@ in
     steam-run
   ];
 
+
+  environment.etc."android-sdk".source = "${my-android-sdk.androidsdk}/libexec/android-sdk";
   environment.variables = {
 
       # ANDROID_HOME = "$HOME/android/sdk";
