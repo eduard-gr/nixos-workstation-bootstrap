@@ -21,6 +21,7 @@
       dbus
       udev
       libvirt
+
       libx11
       libxcursor
       libxcomposite
@@ -30,6 +31,9 @@
       libxi
       libxrender
       libxtst
+      libxcb
+      libXScrnSaver
+
       libpulseaudio
       libuuid
       libpng
