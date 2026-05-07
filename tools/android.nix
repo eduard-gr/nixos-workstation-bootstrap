@@ -1,5 +1,12 @@
 { pkgs, ... }:
-
+let
+  my-android-sdk = pkgs.androidenv.composeAndroidPackages {
+    platformVersions = [ "34" "35" "37" ];
+    abiVersions = [ "x86_64" ];
+    includeSystemImages = true;
+    systemImageTypes = [ "google_apis_playstore" ];
+  };
+in
 {
   nixpkgs.config.android_sdk.accept_license = true;
 
@@ -59,10 +66,10 @@
     android-tools
     android-studio-full
 
-    androidenv.androidPkgs.androidsdk
-    androidenv.androidPkgs.emulator
-    androidenv.androidPkgs.platform-tools
-    androidenv.androidPkgs.ndk-bundle
+    my-android-sdk.androidsdk
+    my-android-sdk.emulator
+    my-android-sdk.platform-tools
+    my-android-sdk.ndk-bundle
 
     gnumake
     steam-run
@@ -72,8 +79,8 @@
 
       # ANDROID_HOME = "$HOME/android/sdk";
 
-      ANDROID_HOME = "${pkgs.androidenv.androidPkgs.androidsdk}/libexec/android-sdk";
-      ANDROID_SDK_ROOT = "${pkgs.androidenv.androidPkgs.androidsdk}/libexec/android-sdk";
+      ANDROID_HOME = "${my-android-sdk.androidsdk}/libexec/android-sdk";
+      ANDROID_SDK_ROOT = "${my-android-sdk.androidsdk}/libexec/android-sdk";
       ANDROID_AVD_HOME = "$HOME/.config/.android/avd";
   };
 
