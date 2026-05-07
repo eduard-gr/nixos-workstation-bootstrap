@@ -33,6 +33,12 @@
       libxtst
       libxcb
       libXScrnSaver
+      libxkbfile      # <--- ТЕКУЩАЯ ОШИБКА
+      libXinerama
+      libXrandr
+      libXres
+      libXv
+
 
       libpulseaudio
       libuuid
