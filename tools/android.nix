@@ -21,15 +21,15 @@
       dbus
       udev
       libvirt
-      xorg.libX11
-      xorg.libXcursor
-      xorg.libXcomposite
-      xorg.libXdamage
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXi
-      xorg.libXrender
-      xorg.libXtst
+      libx11
+      libxcursor
+      libxcomposite
+      libxdamage
+      libxext
+      libxfixes
+      libxi
+      libxrender
+      libxtst
       libpulseaudio
       libuuid
     ];
