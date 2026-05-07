@@ -22,6 +22,7 @@
       udev
       libvirt
 
+      alsa-lib
       libx11
       libxcursor
       libxcomposite
@@ -43,8 +44,6 @@
       xcb-util-cursor
 
       libbsd
-      nss
-      nspr
       atk
       at-spi2-atk
       cups
@@ -82,7 +81,7 @@
   };
 
   environment.shellAliases = {
-      emulator = "QT_QPA_PLATFORM=xcb steam-run ~/android/sdk/emulator/emulator -gpu swiftshader_indirect";
+      emulator = "QT_QPA_PLATFORM=xcb steam-run emulator -gpu swiftshader_indirect";
   };
 
 }
