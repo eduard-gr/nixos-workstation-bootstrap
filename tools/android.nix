@@ -33,14 +33,19 @@
       libxtst
       libxcb
       libXScrnSaver
-      libxkbfile      # <--- ТЕКУЩАЯ ОШИБКА
+      libxkbfile
       libXinerama
       libXrandr
       libXres
       libXv
 
       libbsd
-
+      nss
+      nspr
+      atk
+      at-spi2-atk
+      cups
+      libdrm
       libpulseaudio
       libuuid
       libpng
