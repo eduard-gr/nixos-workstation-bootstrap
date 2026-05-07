@@ -76,15 +76,15 @@
 
   environment.variables = {
 
-      ANDROID_HOME = "$HOME/android/sdk";
-      ANDROID_SDK_ROOT = "$HOME/android/sdk";
+      # ANDROID_HOME = "$HOME/android/sdk";
+      # ANDROID_SDK_ROOT = "$HOME/android/sdk";
       ANDROID_AVD_HOME = "$HOME/.config/.android/avd";
 
-      PATH = [
-        "$HOME/android/sdk/platform-tools"
-        "$HOME/android/sdk/emulator"
-        "$HOME/android/sdk/cmdline-tools/latest/bin"
-      ];
+      # PATH = [
+      #   "$HOME/android/sdk/platform-tools"
+      #   "$HOME/android/sdk/emulator"
+      #   "$HOME/android/sdk/cmdline-tools/latest/bin"
+      # ];
   };
 
   # environment.shellAliases = {
