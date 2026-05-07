@@ -82,7 +82,7 @@
   };
 
   environment.shellAliases = {
-      emulator = "QT_QPA_PLATFORM=xcb emulator -gpu swiftshader_indirect";
+      emulator = "QT_QPA_PLATFORM=xcb steam-run ~/android/sdk/emulator/emulator -gpu swiftshader_indirect";
   };
 
 }
