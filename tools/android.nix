@@ -4,6 +4,7 @@ let
     platformVersions = [ "34" "35" "37" ];
     abiVersions = [ "x86_64" ];
     includeSystemImages = true;
+    includeEmulator = true;
     systemImageTypes = [ "google_apis_playstore" ];
   };
 in
