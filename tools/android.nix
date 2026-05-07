@@ -69,7 +69,7 @@ in
     my-android-sdk.androidsdk
     my-android-sdk.emulator
     my-android-sdk.platform-tools
-    my-android-sdk.ndk-bundle
+    #my-android-sdk.ndk-bundle
 
     gnumake
     steam-run
