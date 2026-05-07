@@ -43,6 +43,8 @@
 
   environment.variables = {
       ANDROID_HOME = "$HOME/android/sdk";
+      ANDROID_SDK_ROOT = "$HOME/android/sdk";
+      ANDROID_AVD_HOME = "$HOME/.android/avd";
 
       PATH = [
         "$HOME/android/sdk/platform-tools"
