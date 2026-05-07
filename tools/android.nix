@@ -39,6 +39,7 @@
       libXres
       libXv
       libxkbcommon
+      libxcbcursor
 
       libbsd
       nss
