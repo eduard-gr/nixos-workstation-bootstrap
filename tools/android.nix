@@ -80,10 +80,11 @@ in
   environment.etc."android-sdk".source = "${my-android-sdk.androidsdk}/libexec/android-sdk";
   environment.variables = {
 
-      # ANDROID_HOME = "$HOME/android/sdk";
+      #ANDROID_HOME = "${my-android-sdk.androidsdk}/libexec/android-sdk";
+      #ANDROID_SDK_ROOT = "${my-android-sdk.androidsdk}/libexec/android-sdk";
 
-      ANDROID_HOME = "${my-android-sdk.androidsdk}/libexec/android-sdk";
-      ANDROID_SDK_ROOT = "${my-android-sdk.androidsdk}/libexec/android-sdk";
+      ANDROID_HOME = "$HOME/android/sdk";
+      ANDROID_SDK_ROOT = "$HOME/android/sdk";
       ANDROID_AVD_HOME = "$HOME/.config/.android/avd";
   };
 
