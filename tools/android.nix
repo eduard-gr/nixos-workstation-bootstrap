@@ -1,11 +1,11 @@
 { pkgs, ... }:
 
 {
-  #KVM
-  programs.adb.enable = true;
+  #no longer has any effect
+  #programs.adb.enable = true;
 
   #list devices
-  services.udev.packages = [ pkgs.android-udev-rules ];
+  #services.udev.packages = [ pkgs.android-udev-rules ];
 
   environment.systemPackages = with pkgs; [
     android-tools
