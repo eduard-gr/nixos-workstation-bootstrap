@@ -64,7 +64,12 @@
   environment.systemPackages = with pkgs; [
     android-tools
     android-studio-full
+
+    androidenv.androidPkgs.androidsdk
     androidenv.androidPkgs.emulator
+    androidenv.androidPkgs.platform-tools
+    androidenv.androidPkgs.ndk-bundle
+
     gnumake
     steam-run
   ];
