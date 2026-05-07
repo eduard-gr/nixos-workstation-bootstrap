@@ -40,6 +40,7 @@
       libXv
       libxkbcommon
       libxcb-cursor
+      xorg.libxcbcursor
 
       libbsd
       nss
