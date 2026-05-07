@@ -82,7 +82,7 @@
   };
 
   environment.shellAliases = {
-      emulator = "QT_QPA_PLATFORM=xcb emulator";
+      emulator = "QT_QPA_PLATFORM=xcb emulator -gpu swiftshader_indirect";
   };
 
 }
