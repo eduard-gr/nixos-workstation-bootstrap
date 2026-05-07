@@ -106,7 +106,6 @@
   # Allow unfree packages
   nixpkgs.config = {
     allowUnfree = true;
-    android_sdk.accept_license = true;
   };
 
   hardware.enableAllFirmware = true;
