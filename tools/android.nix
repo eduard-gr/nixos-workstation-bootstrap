@@ -77,9 +77,10 @@
   environment.variables = {
 
       # ANDROID_HOME = "$HOME/android/sdk";
-      # ANDROID_SDK_ROOT = "$HOME/android/sdk";
+
       ANDROID_HOME = "${pkgs.androidenv.androidPkgs.androidsdk}/libexec/android-sdk";
-      ANDROID_SDK_ROOT = "${pkgs.androidenv.androidPkgs.androidsdk}/libexec/android-sdk";
+      #ANDROID_SDK_ROOT = "${pkgs.androidenv.androidPkgs.androidsdk}/libexec/android-sdk";
+      ANDROID_SDK_ROOT = "$HOME/android/sdk";
       ANDROID_AVD_HOME = "$HOME/.config/.android/avd";
 
       # PATH = [
