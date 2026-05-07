@@ -39,6 +39,7 @@
       libXres
       libXv
 
+      libbsd
 
       libpulseaudio
       libuuid
