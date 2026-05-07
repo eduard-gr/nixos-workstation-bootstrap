@@ -2,7 +2,7 @@
 
 {
   #no longer has any effect
-  #programs.adb.enable = true;
+  programs.adb.enable = true;
 
   #list devices
   #services.udev.packages = [ pkgs.android-udev-rules ];
@@ -81,7 +81,7 @@
   };
 
   environment.shellAliases = {
-      emulator = "QT_QPA_PLATFORM=xcb steam-run emulator -gpu swiftshader_indirect";
+      emulator = "QT_QPA_PLATFORM=xcb steam-run $HOME/android/sdk/emulator/emulator -gpu swiftshader_indirect";
   };
 
 }
