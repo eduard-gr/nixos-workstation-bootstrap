@@ -32,6 +32,13 @@
       libxtst
       libpulseaudio
       libuuid
+      libpng
+      libjpeg
+      zlib
+      mesa
+      libdrm
+      libxkbcommon
+      vulkan-loader
     ];
 
   environment.systemPackages = with pkgs; [
