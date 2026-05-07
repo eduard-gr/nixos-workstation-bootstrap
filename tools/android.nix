@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   #no longer has any effect
@@ -67,7 +67,7 @@
   ];
 
   environment.variables = {
-      QT_QPA_PLATFORM = "xcb";
+      QT_QPA_PLATFORM = lib.mkForce "xcb";
 
       ANDROID_HOME = "$HOME/android/sdk";
       ANDROID_SDK_ROOT = "$HOME/android/sdk";
