@@ -13,4 +13,14 @@
     gnumake
     steam-run
   ];
+
+  environment.variables = {
+      ANDROID_HOME = "$HOME/android/sdk";
+
+      PATH = [
+        "$HOME/android/sdk/platform-tools"
+        "$HOME/android/sdk/emulator"
+        "$HOME/android/sdk/cmdline-tools/latest/bin"
+      ];
+    };
 }
