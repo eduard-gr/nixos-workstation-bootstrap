@@ -15,7 +15,6 @@
     postman
 
     claude-code
-
     cursor-cli
     code-cursor
     antigravity
