@@ -4,7 +4,9 @@
   home = {
     stateVersion = "25.11";
     packages = [
-      pkgs.polonium
+
+      #has been removed, as Plasma 5 has reached end of life.
+      #pkgs.polonium
       pkgs.nixd
 
       # packages requred for qidi-studio
@@ -109,9 +111,9 @@
       wallpaper = "/home/eg/Dropbox/Wallpapers/ibm-retro-mainframe.jpg";
     };
 
-    kwin = {
-      scripts.polonium.enable = false;
-    };
+    # kwin = {
+    #   scripts.polonium.enable = false;
+    # };
 
     input.keyboard.switchingPolicy = "window";
 
@@ -149,7 +151,7 @@
 
     shortcuts = {
       kwin = {
-        "Polonium: Toggle Tiling" = "Meta+T";
+        #"Polonium: Toggle Tiling" = "Meta+T";
 
         "Show Desktop Grid" = "Meta+G";
         "Window Quick Tile Right" = "";
