@@ -23,6 +23,9 @@
     jetbrains.pycharm
     jetbrains.phpstorm
     jetbrains.idea
+
+    grpc-tools
+    protobuf
   ];
 
   services = {
