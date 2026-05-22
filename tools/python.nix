@@ -7,6 +7,7 @@
       scipy
       matplotlib
       numpy
+      plotly
     ]))
   ];
 }
