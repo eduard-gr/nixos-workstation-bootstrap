@@ -35,5 +35,6 @@
     unixtools.netstat
     lsyncd
     usbutils
+    filezilla
   ];
 }
