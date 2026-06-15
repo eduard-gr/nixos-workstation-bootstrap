@@ -36,5 +36,7 @@
     lsyncd
     usbutils
     filezilla
+    qgis
+    keepassxc
   ];
 }
