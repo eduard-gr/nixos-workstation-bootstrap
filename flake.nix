@@ -21,11 +21,20 @@
     #zed.url = "github:zed-industries/zed";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  #outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-android, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
+    };
+
+    pkgs-android = import nixpkgs-android {
+      inherit system;
+      config = {
+        allowUnfree = true;
+        android_sdk.accept_license = true;
+      };
     };
 
     qidi-studio = pkgs.appimageTools.wrapType2 {
@@ -38,19 +47,12 @@
       };
 
       extraPkgs = pkgs: with pkgs; [
-        #cacert
-        #curl
-        #glib
-        #glib-networking
         webkitgtk_4_1
-        #gst_all_1.gst-plugins-base
-        #gst_all_1.gst-plugins-good
-        #gst_all_1.gst-plugins-bad
       ];
     };
 
     specialArgs = {
-      inherit inputs;
+      inherit inputs pkgs-android;
     };
 
   in {
@@ -67,7 +69,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = {
-                inherit inputs qidi-studio;
+                inherit inputs qidi-studio pkgs-android;
               };
 
               users.eg = import ./home/eg.nix;

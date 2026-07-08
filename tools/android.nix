@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-android, ... }:
 let
-  my-android-sdk = pkgs.androidenv.composeAndroidPackages {
+  my-android-sdk = pkgs-android.androidenv.composeAndroidPackages {
     platformVersions = [ "34" "35" "36" "37" ];
     abiVersions = [ "x86_64" ];
     includeSystemImages = true;
@@ -63,17 +63,17 @@ in
       vulkan-loader
     ];
 
-  environment.systemPackages = with pkgs; [
-    android-tools
-    android-studio-full
+  environment.systemPackages = [
+    pkgs-android.android-tools
+    pkgs-android.android-studio-full
 
     my-android-sdk.androidsdk
     my-android-sdk.emulator
     my-android-sdk.platform-tools
     #my-android-sdk.ndk-bundle
 
-    gnumake
-    steam-run
+    pkgs.gnumake
+    pkgs.steam-run
   ];
 
 
