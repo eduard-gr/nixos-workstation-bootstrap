@@ -4,8 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixpkgs-android.url = "github:NixOS/nixpkgs/COMMIT";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,21 +22,20 @@
     #zed.url = "github:zed-industries/zed";
   };
 
-  #outputs = { self, nixpkgs, home-manager, ... }@inputs:
-  outputs = { self, nixpkgs, nixpkgs-android, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
     };
 
-    pkgs-android = import nixpkgs-android {
-      inherit system;
-      config = {
-        allowUnfree = true;
-        android_sdk.accept_license = true;
-      };
-    };
+    # pkgs-android = import nixpkgs-android {
+    #   inherit system;
+    #   config = {
+    #     allowUnfree = true;
+    #     android_sdk.accept_license = true;
+    #   };
+    # };
 
     qidi-studio = pkgs.appimageTools.wrapType2 {
       pname = "qidi-studio";
@@ -55,7 +52,7 @@
     };
 
     specialArgs = {
-      inherit inputs pkgs-android;
+      inherit inputs;
     };
 
   in {
@@ -72,7 +69,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = {
-                inherit inputs qidi-studio pkgs-android;
+                inherit inputs qidi-studio;
               };
 
               users.eg = import ./home/eg.nix;

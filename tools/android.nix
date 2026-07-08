@@ -1,6 +1,6 @@
-{ pkgs, pkgs-android, ... }:
+{ pkgs, ... }:
 let
-  my-android-sdk = pkgs-android.androidenv.composeAndroidPackages {
+  my-android-sdk = pkgs.androidenv.composeAndroidPackages {
     platformVersions = [ "34" "35" "36" "37" ];
     abiVersions = [ "x86_64" ];
     includeSystemImages = true;
@@ -64,8 +64,8 @@ in
     ];
 
   environment.systemPackages = [
-    pkgs-android.android-tools
-    pkgs-android.android-studio-full
+    pkgs.android-tools
+    pkgs.android-studio-full
 
     my-android-sdk.androidsdk
     my-android-sdk.emulator
