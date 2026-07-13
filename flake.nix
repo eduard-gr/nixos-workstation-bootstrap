@@ -78,6 +78,27 @@
           }
         ];
       };
+
+      p15v = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        modules = [
+          ./hosts/p15v/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              backupFileExtension = "backup";
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = {
+                inherit inputs qidi-studio;
+              };
+
+              users.eg = import ./home/eg.nix;
+            };
+          }
+        ];
+      };
+
     };
   };
 }

@@ -61,3 +61,6 @@ git clone...
 nixos-generate-config --root /mnt
 nixos-install
 ```
+#### p15v
+PRIME for Radeon + Nvidea
+nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh
