@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 # Target hardware:
 #   AMD Ryzen 7 PRO 6850H
