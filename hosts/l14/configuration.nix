@@ -1,5 +1,12 @@
 { pkgs, lib, ... }:
 
+# Target hardware:
+#   Processor MD Ryzen 5 4500U
+#   Graphics Integrated AMD Radeon
+#   Memory 64GB SO-DIMM DDR4-3200
+#   Chipset AMD SoC Platform
+#   Storage 512GB SSD M.2 2280 PCIe® 3.0x4 NVMe® Opal 2.0
+
 {
   imports = [
     ./hardware-configuration.nix

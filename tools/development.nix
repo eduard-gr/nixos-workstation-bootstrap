@@ -26,6 +26,7 @@
 
     grpc-tools
     protobuf
+    protoc-gen-grpc-java
   ];
 
   services = {
