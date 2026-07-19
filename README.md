@@ -59,7 +59,7 @@ git clone... /mnt/etc/nixos
 #### Config
 ```bash
 nixos-generate-config --root /mnt
-nixos-install
+nixos-install --flake .#my-host-name --root /mnt
 ```
 #### p15v
 PRIME for Radeon + Nvidea
