@@ -42,4 +42,4 @@ cat <<EOF_NIX
   amdgpuBusId = "${amd_bus_id}";
   nvidiaBusId = "${nvidia_bus_id}";
 }
-EOF_NIX
+EOF_NIX >> ./gpu-bus-ids.nix
