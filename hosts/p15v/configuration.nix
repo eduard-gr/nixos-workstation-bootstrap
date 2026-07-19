@@ -55,9 +55,18 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Store NVIDIA video-memory snapshots outside a potentially RAM-backed /tmp.
+  # amd_pstate=active gives the kernel full EPP-based control of the Zen3+
+  # (Rembrandt) CPU's frequency scaling, instead of falling back to the
+  # older acpi-cpufreq / "guided" behaviour.
   boot.kernelParams = [
     "nvidia.NVreg_TemporaryFilePath=/var/tmp"
+    "amd_pstate=active"
   ];
+
+  # Load amdgpu in the initrd so the iGPU (the boot/display GPU in this PRIME
+  # offload setup) gets KMS as early as possible, avoiding a mode switch/flicker
+  # right before the display manager starts.
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   networking.hostName = "p15v";
 
