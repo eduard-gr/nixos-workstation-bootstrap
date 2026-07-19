@@ -33,7 +33,7 @@ in
     ../../tools/kvm.nix
     ../../tools/python.nix
     ../../tools/frontend.nix
-    #../../tools/ai.nix
+    ../../tools/ai.nix
   ];
 
   assertions = [
