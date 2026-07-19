@@ -9,7 +9,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    ../../hardware-configuration.nix
 
     ../../general/i18n.nix
     ../../general/pipewire.nix

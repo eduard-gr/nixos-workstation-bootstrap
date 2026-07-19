@@ -8,11 +8,11 @@
 let
   # Generated on the target laptop by detect-gpu-bus-ids.sh.
   # PRIME cannot be configured safely without the real PCI addresses.
-  gpuBusIds = import ./gpu-bus-ids.nix;
+  gpuBusIds = import ../../gpu-bus-ids.nix;
 in
 {
   imports = [
-    ./hardware-configuration.nix
+    ../../hardware-configuration.nix
 
     ../../general/i18n.nix
     ../../general/pipewire.nix

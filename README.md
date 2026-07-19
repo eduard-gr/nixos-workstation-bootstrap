@@ -53,7 +53,7 @@ mount -o subvol=log,$FLAGS /dev/nvme0n1p3 /mnt/var/log
 #### Clon repo
 ```bash
 mkdir -p /mnt/etc
-git clone...
+git clone... /mnt/etc/nixos
 ```
 
 #### Config
