@@ -44,7 +44,7 @@ in
       message = ''
         Fill gpu-bus-ids.nix with the real AMD and NVIDIA PCI Bus IDs.
         Run on the ThinkPad P15v:
-          nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh > gpu-bus-ids.nix
+          nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh
       '';
     }
   ];

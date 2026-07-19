@@ -64,3 +64,4 @@ nixos-install
 #### p15v
 PRIME for Radeon + Nvidea
 nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh
+# saves hosts/p15v/gpu-bus-ids.nix
