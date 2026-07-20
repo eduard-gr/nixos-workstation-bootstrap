@@ -28,8 +28,13 @@ swapon /dev/nvme0n1p2
 
 ##### Main FS
 ```bash
-mkfs.btrfs -L nixos /dev/nvme0n1p3
-mount /dev/nvme0n1p3 /mnt
+
+cryptsetup luksFormat /dev/nvme0n1p3
+cryptsetup open /dev/nvme0n1p3 cryptroot
+
+mkfs.btrfs -L nixos /dev/mapper/cryptroot
+
+mount /dev/mapper/cryptroot /mnt
 
 btrfs subvolume create /mnt/root
 btrfs subvolume create /mnt/home
@@ -37,15 +42,16 @@ btrfs subvolume create /mnt/nix
 btrfs subvolume create /mnt/log
 umount /mnt
 
-export FLAGS="noatime,compress=zstd,ssd,space_cache=v2"
+export FLAGS="noatime,compress=zstd:3,ssd"
 
-mount -o subvol=root,$FLAGS /dev/nvme0n1p3 /mnt
+mount -o subvol=root,$FLAGS /dev/mapper/cryptroot /mnt
 mkdir -p /mnt/{boot,home,nix,var/log}
 
 mount /dev/nvme0n1p1 /mnt/boot
-mount -o subvol=home,$FLAGS /dev/nvme0n1p3 /mnt/home
-mount -o subvol=nix,$FLAGS /dev/nvme0n1p3 /mnt/nix
-mount -o subvol=log,$FLAGS /dev/nvme0n1p3 /mnt/var/log
+
+mount -o subvol=home,$FLAGS /dev/mapper/cryptroot /mnt/home
+mount -o subvol=nix,$FLAGS /dev/mapper/cryptroot /mnt/nix
+mount -o subvol=log,$FLAGS /dev/mapper/cryptroot /mnt/var/log
 ```
 
 ### Setup NixOS
