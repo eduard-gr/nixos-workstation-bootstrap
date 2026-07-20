@@ -1,9 +1,11 @@
 { pkgs, lib, ... }:
 
 # Target hardware:
-#   AMD Ryzen 7 PRO 6850H
-#   AMD Radeon 680M iGPU
-#   NVIDIA RTX A2000 Laptop GPU
+#   Manufactory: Lenovo ThinkPad p15v Gen 3
+#   Bios version: N3KET43W (1.21)
+#   Cpu type: AMD Ryzen 7 PRO 6850H with Radeon 680M iGPU
+#   Gpu type: AMD Radeon 680M iGPU
+#   Nvidia gpu type: NVIDIA RTX A2000 Laptop GPU
 
 let
   # Generated on the target laptop by detect-gpu-bus-ids.sh.
