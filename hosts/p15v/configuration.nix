@@ -33,7 +33,7 @@ in
     ../../tools/kvm.nix
     ../../tools/python.nix
     ../../tools/frontend.nix
-    ../../tools/ai.nix
+    #../../tools/ai.nix
   ];
 
   assertions = [
@@ -194,6 +194,8 @@ in
       "adbusers"
     ];
   };
+
+  security.sudo.wheelNeedsPassword = true;
 
   # Suspend first, then hibernate after the configured delay.
   services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";

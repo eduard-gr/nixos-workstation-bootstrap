@@ -144,6 +144,8 @@
     ];
   };
 
+  security.sudo.wheelNeedsPassword = true;
+
   #TODO needs to be tested
   # Suspend first then hibernate when closing the lid
   services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";

@@ -67,6 +67,12 @@ git clone... /mnt/etc/nixos
 nixos-generate-config --root /mnt
 nixos-install --flake .#my-host-name --root /mnt
 ```
+
+If you have a user account declared in your configuration.nix and plan to log in using this user, set a password before rebooting, e.g. for the alice user:
+```bash
+nixos-enter --root /mnt -c 'passwd alice'
+```
+
 #### p15v
 PRIME for Radeon + Nvidea
 nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh
