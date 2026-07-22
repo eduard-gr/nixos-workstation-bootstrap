@@ -62,7 +62,13 @@ in
   # older acpi-cpufreq / "guided" behaviour.
   boot.kernelParams = [
     "nvidia.NVreg_TemporaryFilePath=/var/tmp"
+    "nvidia.NVreg_UseKernelSuspendNotifiers=1"
+    "nvidia.NVreg_EnableS0ixPowerManagement=1"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     "amd_pstate=active"
+    "nvme_core.default_ps_max_latency_us=0"
+    "pcie_aspm=off"
+    "iommu=soft"
   ];
 
   # Load amdgpu in the initrd so the iGPU (the boot/display GPU in this PRIME
