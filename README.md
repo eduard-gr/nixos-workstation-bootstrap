@@ -65,8 +65,14 @@ git clone... /mnt/etc/nixos
 #### Config
 ```bash
 nixos-generate-config --root /mnt
+
+git -f gpu-bus-ids.nix
+git -f hardware-configuration.nix
+
 nixos-install --flake .#my-host-name --root /mnt
 ```
+
+
 
 If you have a user account declared in your configuration.nix and plan to log in using this user, set a password before rebooting, e.g. for the alice user:
 ```bash
