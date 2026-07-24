@@ -66,8 +66,8 @@ git clone... /mnt/etc/nixos
 ```bash
 nixos-generate-config --root /mnt
 
-git -f gpu-bus-ids.nix
-git -f hardware-configuration.nix
+git add -f gpu-bus-ids.nix
+git add -f hardware-configuration.nix
 
 nixos-install --flake .#my-host-name --root /mnt
 ```
