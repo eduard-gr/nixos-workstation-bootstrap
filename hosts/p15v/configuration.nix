@@ -36,6 +36,7 @@ in
     ../../tools/python.nix
     ../../tools/frontend.nix
     #../../tools/ai.nix
+    ../../tools/agentic.nix
   ];
 
   assertions = [

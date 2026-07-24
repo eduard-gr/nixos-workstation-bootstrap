@@ -30,6 +30,8 @@
     ../../tools/kvm.nix
     ../../tools/python.nix
     ../../tools/frontend.nix
+
+    ../../tools/agentic.nix
   ];
 
   # Use latest kernel.
