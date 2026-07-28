@@ -83,3 +83,11 @@ nixos-enter --root /mnt -c 'passwd alice'
 PRIME for Radeon + Nvidea
 nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh
 # saves hosts/p15v/gpu-bus-ids.nix
+
+
+### Maintanence NixOS
+#### Update
+```bash
+nix flake update
+nixos-rebuild switch --flake .#my-host-name
+```

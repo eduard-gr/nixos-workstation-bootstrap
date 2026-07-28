@@ -8,6 +8,11 @@
       matplotlib
       numpy
       plotly
+      sqlalchemy
+      clickhouse-connect
+
+      sklearn-compat
+
     ]))
   ];
 }
