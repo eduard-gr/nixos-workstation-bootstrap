@@ -34,7 +34,7 @@
         serif = [ "Liberation Serif" ];
         sansSerif = [ "Liberation Sans" ];
         monospace = [ "Liberation Mono" ];
-        emoji = [ "Twemoji" ];
+        emoji = [ "Twitter Color Emoji" ];
       };
     };
   };
