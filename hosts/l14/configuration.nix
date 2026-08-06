@@ -142,7 +142,6 @@
       "docker"
       "libvirtd"
       "kvm"
-      "adbusers"
     ];
   };
 

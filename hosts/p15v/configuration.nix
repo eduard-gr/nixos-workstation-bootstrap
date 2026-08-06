@@ -27,7 +27,7 @@ in
     ../../tools/docker.nix
     ../../tools/www.nix
     ../../tools/development.nix
-    #../../tools/android.nix
+    ../../tools/android.nix
     ../../tools/php83.nix
     ../../tools/libreoffice.nix
     ../../tools/multimedia.nix
@@ -200,7 +200,6 @@ in
       "docker"
       "libvirtd"
       "kvm"
-      "adbusers"
     ];
   };
 

@@ -1,13 +1,9 @@
 { pkgs, ... }:
-let
-  my-android-sdk = pkgs.androidenv.composeAndroidPackages {
-    platformVersions = [ "34" "35" "36" "37" ];
-    abiVersions = [ "x86_64" ];
-    includeSystemImages = true;
-    includeEmulator = true;
-    systemImageTypes = [ "google_apis_playstore" ];
-  };
-in
+
+# Imperative SDK strategy: Android Studio manages the SDK in $HOME/android/sdk.
+# nix-ld below is what makes the prebuilt SDK binaries (aapt2, adb, emulator)
+# downloaded by Studio work on NixOS.
+
 {
   nixpkgs.config.android_sdk.accept_license = true;
 
@@ -23,7 +19,6 @@ in
       freetype
       dbus
       udev
-      libvirt
 
       alsa-lib
       libx11
@@ -58,38 +53,20 @@ in
       libjpeg
       zlib
       mesa
-      libdrm
 
       vulkan-loader
     ];
 
   environment.systemPackages = [
     pkgs.android-tools
-    pkgs.android-studio-full
-
-    my-android-sdk.androidsdk
-    my-android-sdk.emulator
-    my-android-sdk.platform-tools
-    #my-android-sdk.ndk-bundle
+    pkgs.android-studio
 
     pkgs.gnumake
     pkgs.steam-run
   ];
 
-
-  environment.etc."android-sdk".source = "${my-android-sdk.androidsdk}/libexec/android-sdk";
   environment.variables = {
-
-      #ANDROID_HOME = "${my-android-sdk.androidsdk}/libexec/android-sdk";
-      #ANDROID_SDK_ROOT = "${my-android-sdk.androidsdk}/libexec/android-sdk";
-
       ANDROID_HOME = "$HOME/android/sdk";
       ANDROID_SDK_ROOT = "$HOME/android/sdk";
-      ANDROID_AVD_HOME = "$HOME/.config/.android/avd";
   };
-
-  # environment.shellAliases = {
-  #     emulator = "QT_QPA_PLATFORM=xcb steam-run $HOME/android/sdk/emulator/emulator -gpu swiftshader_indirect";
-  # };
-
 }
