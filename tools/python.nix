@@ -4,6 +4,8 @@
   environment.systemPackages = with pkgs; [
     (python314.withPackages (ps: with ps; [
       pandas
+      pandas-ta
+
       scipy
       matplotlib
       numpy

@@ -8,17 +8,29 @@
 
 let
   androidComposition = pkgs.androidenv.composeAndroidPackages {
-    platformVersions = [ "34" "35" "36" ];
-    buildToolsVersions = [ "34.0.0" "35.0.0" "36.0.0" ];
 
-    # Emulator + system images for AVDs (the AVDs themselves are created in
-    # Studio's Device Manager as usual and live in ~/.android/avd).
+    includeNDK = true;
     includeEmulator = true;
     includeSystemImages = true;
+
+    platformToolsVersion = "35.0.1";
+    buildToolsVersions = [ "34.0.0" ];
+    platformVersions = [ "34"];
+    cmakeVersions = [ "3.10.2" ];
+    extraLicenses = [
+      "android-googletv-license"
+      "android-sdk-arm-dbt-license"
+      "android-sdk-license"
+      "android-sdk-preview-license"
+      "google-gdk-license"
+      "intel-android-extra-license"
+      "intel-android-sysimage-license"
+      "mips-android-sysimage-license"
+    ];
+
     systemImageTypes = [ "google_apis" ];
     abiVersions = [ "x86_64" ];
 
-    includeNDK = false;
     includeSources = false;
   };
 
@@ -79,18 +91,22 @@ in
       vulkan-loader
     ];
 
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     # Provides adb/fastboot/emulator/sdkmanager etc. on PATH; android-tools
     # was dropped to avoid colliding with the SDK's own platform-tools.
     androidComposition.androidsdk
-    pkgs.android-studio
+    androidComposition.ndk-bundle
 
-    pkgs.gnumake
-    pkgs.steam-run
+    android-studio
+
+    gnumake
+    steam-run
   ];
 
   environment.variables = {
       ANDROID_HOME = sdkRoot;
       ANDROID_SDK_ROOT = sdkRoot;
+
+      ANDROID_NDK_ROOT = "${sdkRoot}/ndk-bundle";
   };
 }
