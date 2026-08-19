@@ -17,7 +17,7 @@
     claude-code
     cursor-cli
     code-cursor
-    antigravity
+    antigravity-ide
 
     jetbrains.goland
     jetbrains.pycharm

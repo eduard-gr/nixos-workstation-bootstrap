@@ -13,7 +13,7 @@ let
     includeEmulator = true;
     includeSystemImages = true;
 
-    platformToolsVersion = "35.0.1";
+    platformToolsVersion = "37.0.1";
     buildToolsVersions = [ "34.0.0" ];
     platformVersions = [ "34"];
     cmakeVersions = [ "3.10.2" ];
