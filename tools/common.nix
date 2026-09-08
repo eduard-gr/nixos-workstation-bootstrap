@@ -39,5 +39,6 @@
     qgis
     keepassxc
     pciutils
+    pavucontrol
   ];
 }
