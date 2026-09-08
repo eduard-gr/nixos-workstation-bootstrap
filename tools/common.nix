@@ -38,5 +38,6 @@
     filezilla
     qgis
     keepassxc
+    pciutils
   ];
 }

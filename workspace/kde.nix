@@ -14,6 +14,7 @@
     kdePackages.breeze-icons
     hicolor-icon-theme
     #kdePackages.qt6ct
+    kdePackages.kcalc
   ];
 
   xdg.portal = {
