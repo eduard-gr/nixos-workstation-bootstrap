@@ -40,5 +40,6 @@
     keepassxc
     pciutils
     pavucontrol
+    wakeonlan
   ];
 }
