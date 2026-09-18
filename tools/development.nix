@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    gcc
     cmake
     javaPackages.compiler.openjdk25
     maven
