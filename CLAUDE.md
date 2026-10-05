@@ -34,7 +34,7 @@ Configuration is composed by import, split into four layers:
 - **`hosts/<name>/configuration.nix`** — the only per-host file and the entry point for that host. Holds hostname, hardware/kernel/GPU specifics, power management, the user account, and the `imports` list selecting which shared modules to activate. `l14` (AMD iGPU only) and `p15v` (AMD 680M iGPU + NVIDIA RTX A2000 PRIME offload) differ mainly in GPU and kernel-param setup.
 - **`general/`** — cross-cutting system concerns (`i18n`, `network` with NetworkManager + L2TP VPN, `pipewire` audio).
 - **`workspace/kde.nix`** — the KDE Plasma 6 + Wayland desktop, fonts, xdg portals.
-- **`tools/*.nix`** — one file per capability area (`docker`, `python`, `php83`, `3d`, `kvm`, `multimedia`, `agentic` = claude-code, etc.). Each is a self-contained module. Enable a capability on a host by adding its import to that host's `imports` list; several are commented out per-host (e.g. `android`, `ai`).
+- **`tools/*.nix`** — one file per capability area (`docker`, `python`, `php83`, `3d`, `kvm`, `multimedia`, `agentic` = claude-code, etc.). Each is a self-contained module. Enable a capability on a host by adding its import to that host's `imports` list; several are commented out per-host (e.g. `ai`). Android development is deliberately *not* a `tools/` module: it lives in a per-project flake (`android-dev/`) using `buildFHSEnv` + direnv, with only the system-level pieces (adb, nix-ld, direnv) in `tools/development.nix`.
 
 `home/eg.nix` is home-manager user config: heavy per-app setup for the Zed editor, KDE Plasma via `plasma-manager`, atuin, and a user-level Dropbox systemd service.
 
