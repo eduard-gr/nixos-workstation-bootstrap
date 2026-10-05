@@ -209,6 +209,11 @@ in
 
   # Keep only a limited number of old generations.
   boot.loader.systemd-boot.configurationLimit = 10;
+
+  boot.kernel.sysctl = {
+    "user.max_user_namespaces" = 28633;
+  };
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
