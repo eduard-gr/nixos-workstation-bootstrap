@@ -61,11 +61,36 @@ in
   # (Rembrandt) CPU's frequency scaling, instead of falling back to the
   # older acpi-cpufreq / "guided" behaviour.
   boot.kernelParams = [
+    # Receives the VRAM snapshot on suspend — see checklist item 5.
     "nvidia.NVreg_TemporaryFilePath=/var/tmp"
+
+    # Redundant: the NixOS NVIDIA module already sets both of these from
+    # hardware.nvidia.powerManagement.kernelSuspendNotifier and .enable
+    # (nixos/modules/hardware/video/nvidia.nix). Not broken, but the module
+    # writes them into modprobe.d while these go on the kernel cmdline, so a
+    # future divergence would be painful to debug.
     "nvidia.NVreg_UseKernelSuspendNotifiers=1"
-    "nvidia.NVreg_EnableS0ixPowerManagement=1"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+
+    # Only correct when this machine really suspends via s2idle/S0ix — see
+    # checklist item 4. If the BIOS sleep state is "Linux"/S3 and the kernel
+    # uses "deep", this flag contradicts reality.
+    "nvidia.NVreg_EnableS0ixPowerManagement=1"
+
     "amd_pstate=active"
+
+    # The three below are workarounds, and each one costs sleep quality. When
+    # bisecting a suspend/resume problem, remove them ONE AT A TIME and re-test;
+    # dropping all three at once tells you nothing.
+    #   nvme_core...=0 disables NVMe APST outright, so the SSD never enters a
+    #                  low-power state during s2idle.
+    #   pcie_aspm=off  keeps PCIe links out of low-power states, which works
+    #                  against both S0ix residency and the RTD3 runtime
+    #                  power-down enabled by nvidia.powerManagement.finegrained
+    #                  just below — this file asks for both at once.
+    #   iommu=soft     forces SWIOTLB instead of the hardware IOMMU; unusual on
+    #                  AMD and at odds with the PCI passthrough that
+    #                  tools/kvm.nix implies.
     "nvme_core.default_ps_max_latency_us=0"
     "pcie_aspm=off"
     "iommu=soft"
@@ -204,7 +229,74 @@ in
 
   security.sudo.wheelNeedsPassword = true;
 
+  # ---------------------------------------------------------------------------
+  # SUSPEND / HIBERNATE — what to verify on this laptop
+  #
+  # Items found while auditing this file. Most of them cannot be checked from
+  # another machine, so work through them ON THE P15V itself.
+  #
+  # 1. The three logind keys below are misspelled and systemd ignores them.
+  #    services.logind.settings.Login is a freeform attrset, so NixOS writes
+  #    through whatever it is given without validating. The valid names all
+  #    start with "Handle" — see logind.conf(5), and the renames in
+  #    nixos/modules/system/boot/systemd/logind.nix which map the old NixOS
+  #    options (lidSwitch, powerKey, powerKeyLongPress) onto HandleLidSwitch,
+  #    HandlePowerKey and HandlePowerKeyLongPress. Confirmed on l14, which
+  #    carries identical lines:
+  #      journalctl -b -u systemd-logind | grep -i unknown
+  #      -> /etc/systemd/logind.conf:3: Unknown key 'LidSwitch' in section
+  #         [Login], ignoring.
+  #    Until they are renamed the systemd defaults apply: lid close suspends
+  #    (never suspend-then-hibernate) and the power key powers off.
+  #
+  # 2. Renaming them still changes little under KDE. PowerDevil takes the lid
+  #    and the power key away from logind with an inhibitor in "block" mode,
+  #    so Plasma's own power settings decide. Check who is in charge:
+  #      systemd-inhibit --list | grep -i powerdevil
+  #      -> PowerDevil ... handle-power-key:...:handle-lid-switch ... block
+  #    logind only governs the no-session case (SDDM greeter, TTY). The real
+  #    policy belongs in Plasma, which can be declared via plasma-manager in
+  #    home/eg.nix — that file currently sets nothing power-related.
+  #
+  # 3. Hibernate needs swap and this host declares none. l14 declares its swap
+  #    partition in the host file; here it would have to come from the
+  #    (gitignored) hardware-configuration.nix. Verify it exists and is at
+  #    least as large as RAM:
+  #      swapon --show; free -h
+  #    A swap FILE is not sufficient by itself: stage-1.nix derives
+  #    resumeDevices only from swapDevices entries whose device starts with
+  #    /dev/, so a file is filtered out and resume silently fails. For a
+  #    swapfile, add explicitly:
+  #      boot.resumeDevice = "/dev/nvme0n1pN";
+  #      boot.kernelParams = [ "resume_offset=..." ];  # filefrag -v /swapfile
+  #
+  # 4. The sleep mode this host actually uses is unverified:
+  #      cat /sys/power/mem_sleep    # "[s2idle] deep" or "s2idle [deep]"
+  #    SuspendState=mem below only writes "mem" to /sys/power/state; what that
+  #    resolves to is decided by mem_sleep_default=. l14 pins it explicitly
+  #    ("mem_sleep_default=deep"), this host does not pin anything. Once the
+  #    answer is known, pin it here via MemorySleepMode= or via
+  #    mem_sleep_default= in boot.kernelParams, and make
+  #    NVreg_EnableS0ixPowerManagement agree with it (see kernelParams above).
+  #
+  # 5. /var/tmp receives the VRAM snapshot (NVreg_TemporaryFilePath). The
+  #    A2000 Laptop carries 4-8 GB, and a tmpfs would put that straight back
+  #    into RAM, defeating the point:
+  #      findmnt /var/tmp; df -h /var/tmp
+  #
+  # 6. If resume breaks on the GPU specifically: kernelSuspendNotifier = true
+  #    means nixpkgs deliberately does NOT create the nvidia-suspend,
+  #    nvidia-hibernate and nvidia-resume services (nvidia.nix). Flipping it to
+  #    false brings the classic scripts back and is a useful bisect lever.
+  #
+  # 7. After a failed wake-up, these show where it fell over:
+  #      journalctl -b -1 -p err --no-pager | tail -40
+  #      journalctl -b | grep -iE "PM: |suspend|resume|hibernat" | tail -40
+  #      systemctl status nvidia-powerd   # is Dynamic Boost actually supported?
+  # ---------------------------------------------------------------------------
+
   # Suspend first, then hibernate after the configured delay.
+  # NOTE: these three keys are ignored by systemd as written — checklist item 1.
   services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";
   services.logind.settings.Login.PowerKey = "hibernate";
   services.logind.settings.Login.PowerKeyLongPress = "poweroff";
