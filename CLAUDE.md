@@ -40,7 +40,7 @@ Configuration is composed by import, split into four layers:
 
 ## Key conventions
 
-- **`hardware-configuration.nix` and `gpu-bus-ids.nix` are gitignored** (see `.gitignore`) because they are machine-generated and machine-specific. During install they must be force-added (`git add -f`) so the flake can see them, or generated on the target. `p15v` has an `assertion` that fails the build if `gpu-bus-ids.nix` still holds empty PCI IDs — regenerate it with `detect-gpu-bus-ids.sh` on that laptop. Note the committed root-owned `gpu-bus-ids.nix` currently holds placeholder/duplicate IDs.
-- Both hosts pin nixpkgs to a release channel (`nixos-26.05`), enable flakes + `allowUnfree`, cap boot generations at 10, and garbage-collect weekly.
+- **`hardware-configuration.nix` and `gpu-bus-ids.nix` are gitignored** (see `.gitignore`) because they are machine-generated and machine-specific. During install they must be force-added (`git add -f`) so the flake can see them, or generated on the target. `p15v` has an `assertion` that fails the build if `gpu-bus-ids.nix` holds empty or identical PCI IDs — regenerate it with `detect-gpu-bus-ids.sh` on that laptop (the script matches GPUs by PCI vendor ID, `1002`/`10de`).
+- Both hosts track `nixos-unstable` (see `flake.nix`; a commented-out `nixos-26.05` pin is kept there), enable flakes + `allowUnfree`, cap boot generations at 10, and garbage-collect weekly.
 - Shared modules take only `{ pkgs, ... }` (plus `lib`/`config` as needed) and add to `environment.systemPackages` or enable services — keep new capabilities as new `tools/*.nix` modules rather than expanding host files.
 - The user is `eg`; `system.stateVersion` is `26.05` and must not be bumped just because the channel moved.

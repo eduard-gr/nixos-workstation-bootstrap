@@ -10,8 +10,11 @@ fi
 
 mapfile -t gpu_lines < <(lspci -Dnn -d ::03xx)
 
-amd_line="$(printf '%s\n' "${gpu_lines[@]}" | grep -Ei 'AMD|Advanced Micro Devices|ATI' | head -n1 || true)"
-nvidia_line="$(printf '%s\n' "${gpu_lines[@]}" | grep -i 'NVIDIA' | head -n1 || true)"
+# Match on PCI vendor IDs, not vendor names: a case-insensitive "ATI" also
+# matches "Corporation" in the NVIDIA line, which once produced a file with
+# the NVIDIA address in both fields.
+amd_line="$(printf '%s\n' "${gpu_lines[@]}" | grep -F '[1002:' | head -n1 || true)"
+nvidia_line="$(printf '%s\n' "${gpu_lines[@]}" | grep -F '[10de:' | head -n1 || true)"
 
 if [[ -z "$amd_line" || -z "$nvidia_line" ]]; then
   echo "Could not find both AMD and NVIDIA display controllers." >&2

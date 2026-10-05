@@ -146,12 +146,15 @@
 
   security.sudo.wheelNeedsPassword = true;
 
-  #TODO needs to be tested
-  # Suspend first then hibernate when closing the lid
-  services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";
-  # Hibernate on power button pressed
-  services.logind.settings.Login.PowerKey = "hibernate";
-  services.logind.settings.Login.PowerKeyLongPress = "poweroff";
+  # Suspend first then hibernate when closing the lid; hibernate on power
+  # button, poweroff on long press. logind.conf(5) wants the Handle* names —
+  # the earlier LidSwitch/PowerKey spellings were silently ignored by systemd
+  # ("Unknown key ... in section [Login]"). Note that inside a Plasma session
+  # PowerDevil overrides these with a block-mode inhibitor; logind only
+  # governs the no-session case (SDDM greeter, TTY).
+  services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
+  services.logind.settings.Login.HandlePowerKey = "hibernate";
+  services.logind.settings.Login.HandlePowerKeyLongPress = "poweroff";
 
   # Suspend first
   boot.kernelParams = ["mem_sleep_default=deep"];

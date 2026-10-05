@@ -42,10 +42,13 @@ in
     {
       assertion =
         gpuBusIds.amdgpuBusId != ""
-        && gpuBusIds.nvidiaBusId != "";
+        && gpuBusIds.nvidiaBusId != ""
+        # Equal IDs mean detection picked the same card twice (an old
+        # detect-gpu-bus-ids.sh bug did exactly that), never a valid PRIME pair.
+        && gpuBusIds.amdgpuBusId != gpuBusIds.nvidiaBusId;
       message = ''
-        Fill gpu-bus-ids.nix with the real AMD and NVIDIA PCI Bus IDs.
-        Run on the ThinkPad P15v:
+        Fill gpu-bus-ids.nix with the real AMD and NVIDIA PCI Bus IDs
+        (they must be non-empty and different). Run on the ThinkPad P15v:
           nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh
       '';
     }
@@ -62,19 +65,16 @@ in
   # older acpi-cpufreq / "guided" behaviour.
   boot.kernelParams = [
     # Receives the VRAM snapshot on suspend — see checklist item 5.
+    # NVreg_UseKernelSuspendNotifiers and NVreg_PreserveVideoMemoryAllocations
+    # are deliberately NOT repeated here: the NixOS NVIDIA module already sets
+    # both via hardware.nvidia.moduleParams (from powerManagement.enable and
+    # .kernelSuspendNotifier below) and writes them to modprobe.d.
     "nvidia.NVreg_TemporaryFilePath=/var/tmp"
 
-    # Redundant: the NixOS NVIDIA module already sets both of these from
-    # hardware.nvidia.powerManagement.kernelSuspendNotifier and .enable
-    # (nixos/modules/hardware/video/nvidia.nix). Not broken, but the module
-    # writes them into modprobe.d while these go on the kernel cmdline, so a
-    # future divergence would be painful to debug.
-    "nvidia.NVreg_UseKernelSuspendNotifiers=1"
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-
-    # Only correct when this machine really suspends via s2idle/S0ix — see
-    # checklist item 4. If the BIOS sleep state is "Linux"/S3 and the kernel
-    # uses "deep", this flag contradicts reality.
+    # Correct for this machine: /sys/power/mem_sleep offers only "[s2idle]"
+    # (verified on the P15v, 2026-10-05) — the platform has no S3/"deep" at
+    # all, so S0ix power management matches reality. The module does not set
+    # this one itself.
     "nvidia.NVreg_EnableS0ixPowerManagement=1"
 
     "amd_pstate=active"
@@ -125,8 +125,9 @@ in
   # The desktop runs on the Radeon 680M; demanding applications can be started
   # with: nvidia-offload <program>
   hardware.nvidia = {
-    # NixOS 26.05: newest production/new-feature branch packaged for the
-    # selected kernel. To include beta drivers in future, use "bleeding_edge".
+    # Newest production/new-feature branch packaged for the selected kernel
+    # (flake.nix currently tracks nixos-unstable). To include beta drivers in
+    # future, use "bleeding_edge".
     branch = "latest";
 
     # RTX A2000 is Ampere, so use NVIDIA's open kernel modules.
@@ -157,13 +158,13 @@ in
   };
 
   # OpenGL / Vulkan / VA-API. The NixOS NVIDIA module adds the matching NVIDIA
-  # userspace libraries and nvidia-vaapi-driver automatically.
+  # userspace libraries and nvidia-vaapi-driver automatically; the Mesa drivers
+  # for the iGPU come with hardware.graphics.enable itself. extraPackages is
+  # only for extra driver backends.
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
-      mesa
-      libva
       libva-vdpau-driver
     ];
   };
@@ -230,76 +231,60 @@ in
   security.sudo.wheelNeedsPassword = true;
 
   # ---------------------------------------------------------------------------
-  # SUSPEND / HIBERNATE — what to verify on this laptop
+  # SUSPEND / HIBERNATE — audit checklist, re-verified on the P15V 2026-10-05
   #
-  # Items found while auditing this file. Most of them cannot be checked from
-  # another machine, so work through them ON THE P15V itself.
+  # 1. RESOLVED. The logind keys below used to be spelled LidSwitch/PowerKey/
+  #    PowerKeyLongPress; logind.conf(5) wants Handle* names, and systemd
+  #    logged "Unknown key 'LidSwitch' in section [Login], ignoring" for all
+  #    three. They are renamed now. (services.logind.settings.Login is a
+  #    freeform attrset — NixOS writes through whatever it is given without
+  #    validating, so typos here are silent.)
   #
-  # 1. The three logind keys below are misspelled and systemd ignores them.
-  #    services.logind.settings.Login is a freeform attrset, so NixOS writes
-  #    through whatever it is given without validating. The valid names all
-  #    start with "Handle" — see logind.conf(5), and the renames in
-  #    nixos/modules/system/boot/systemd/logind.nix which map the old NixOS
-  #    options (lidSwitch, powerKey, powerKeyLongPress) onto HandleLidSwitch,
-  #    HandlePowerKey and HandlePowerKeyLongPress. Confirmed on l14, which
-  #    carries identical lines:
-  #      journalctl -b -u systemd-logind | grep -i unknown
-  #      -> /etc/systemd/logind.conf:3: Unknown key 'LidSwitch' in section
-  #         [Login], ignoring.
-  #    Until they are renamed the systemd defaults apply: lid close suspends
-  #    (never suspend-then-hibernate) and the power key powers off.
-  #
-  # 2. Renaming them still changes little under KDE. PowerDevil takes the lid
-  #    and the power key away from logind with an inhibitor in "block" mode,
-  #    so Plasma's own power settings decide. Check who is in charge:
-  #      systemd-inhibit --list | grep -i powerdevil
-  #      -> PowerDevil ... handle-power-key:...:handle-lid-switch ... block
+  # 2. STILL OPEN. Renaming them changes little under KDE: PowerDevil takes
+  #    the lid and the power key away from logind with an inhibitor in
+  #    "block" mode (verified: systemd-inhibit --list shows PowerDevil with
+  #    handle-power-key:handle-suspend-key:handle-hibernate-key:
+  #    handle-lid-switch, mode block), so Plasma's own power settings decide.
   #    logind only governs the no-session case (SDDM greeter, TTY). The real
   #    policy belongs in Plasma, which can be declared via plasma-manager in
   #    home/eg.nix — that file currently sets nothing power-related.
   #
-  # 3. Hibernate needs swap and this host declares none. l14 declares its swap
-  #    partition in the host file; here it would have to come from the
-  #    (gitignored) hardware-configuration.nix. Verify it exists and is at
-  #    least as large as RAM:
-  #      swapon --show; free -h
-  #    A swap FILE is not sufficient by itself: stage-1.nix derives
-  #    resumeDevices only from swapDevices entries whose device starts with
-  #    /dev/, so a file is filtered out and resume silently fails. For a
-  #    swapfile, add explicitly:
-  #      boot.resumeDevice = "/dev/nvme0n1pN";
-  #      boot.kernelParams = [ "resume_offset=..." ];  # filefrag -v /swapfile
+  # 3. VERIFIED, with one caveat. Swap exists and is large enough: a 59.6 GiB
+  #    partition vs 30 GiB RAM, declared in hardware-configuration.nix as
+  #    /dev/disk/by-uuid/... — the /dev/ prefix means stage-1 derives the
+  #    resume device from it automatically. CAVEAT: the root filesystem is on
+  #    LUKS (cryptroot) but the swap partition is NOT encrypted, so
+  #    hibernation writes the full RAM image to disk in plaintext. To close
+  #    that hole, move swap inside LUKS (or a second LUKS volume) — resume
+  #    then needs the initrd to unlock it.
   #
-  # 4. The sleep mode this host actually uses is unverified:
-  #      cat /sys/power/mem_sleep    # "[s2idle] deep" or "s2idle [deep]"
-  #    SuspendState=mem below only writes "mem" to /sys/power/state; what that
-  #    resolves to is decided by mem_sleep_default=. l14 pins it explicitly
-  #    ("mem_sleep_default=deep"), this host does not pin anything. Once the
-  #    answer is known, pin it here via MemorySleepMode= or via
-  #    mem_sleep_default= in boot.kernelParams, and make
-  #    NVreg_EnableS0ixPowerManagement agree with it (see kernelParams above).
+  # 4. VERIFIED. /sys/power/mem_sleep is "[s2idle]" — s2idle is the ONLY mode
+  #    this platform offers, there is no S3/"deep". SuspendState=mem below
+  #    therefore always resolves to s2idle, and NVreg_EnableS0ixPowerManagement
+  #    (kernelParams above) agrees with reality. Nothing to pin: with a single
+  #    available mode, mem_sleep_default= would be a no-op.
   #
-  # 5. /var/tmp receives the VRAM snapshot (NVreg_TemporaryFilePath). The
-  #    A2000 Laptop carries 4-8 GB, and a tmpfs would put that straight back
-  #    into RAM, defeating the point:
-  #      findmnt /var/tmp; df -h /var/tmp
+  # 5. VERIFIED. /var/tmp (receives the VRAM snapshot via
+  #    NVreg_TemporaryFilePath) is a btrfs subvolume on cryptroot, not tmpfs,
+  #    so the 4-8 GB A2000 snapshot does not land back in RAM.
   #
   # 6. If resume breaks on the GPU specifically: kernelSuspendNotifier = true
   #    means nixpkgs deliberately does NOT create the nvidia-suspend,
-  #    nvidia-hibernate and nvidia-resume services (nvidia.nix). Flipping it to
-  #    false brings the classic scripts back and is a useful bisect lever.
+  #    nvidia-hibernate and nvidia-resume services (confirmed: no such units
+  #    exist on the running system). Flipping it to false brings the classic
+  #    scripts back and is a useful bisect lever.
   #
-  # 7. After a failed wake-up, these show where it fell over:
+  # 7. Dynamic Boost is real on this machine: nvidia-powerd is active
+  #    (running). After a failed wake-up, these show where it fell over:
   #      journalctl -b -1 -p err --no-pager | tail -40
   #      journalctl -b | grep -iE "PM: |suspend|resume|hibernat" | tail -40
-  #      systemctl status nvidia-powerd   # is Dynamic Boost actually supported?
   # ---------------------------------------------------------------------------
 
-  # Suspend first, then hibernate after the configured delay.
-  # NOTE: these three keys are ignored by systemd as written — checklist item 1.
-  services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";
-  services.logind.settings.Login.PowerKey = "hibernate";
-  services.logind.settings.Login.PowerKeyLongPress = "poweroff";
+  # Suspend first, then hibernate after the configured delay. These only apply
+  # outside a Plasma session — see checklist item 2.
+  services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
+  services.logind.settings.Login.HandlePowerKey = "hibernate";
+  services.logind.settings.Login.HandlePowerKeyLongPress = "poweroff";
 
   systemd.sleep.settings.Sleep = {
     HibernateDelaySec = "30m";
