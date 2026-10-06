@@ -42,16 +42,21 @@ distrobox assemble create --file /etc/nixos/android-dev/distrobox.ini
 
 ### 2. Поставить Android Studio
 
+Запускать с хоста — скрипт сам перезапустится внутри контейнера:
+
 ```bash
-distrobox enter android -- /etc/nixos/android-dev/install-android-studio.sh
+/etc/nixos/android-dev/install-android-studio.sh
 ```
+
+Не вызывайте его как `distrobox enter android -- /etc/nixos/...`: у контейнера
+свой `/etc`, хостовый виден только как `/run/host/etc`, и путь не найдётся.
 
 Скрипт берёт ссылку на последний tarball со страницы
 developer.android.com/studio. Конкретную версию можно задать явно:
 
 ```bash
 ANDROID_STUDIO_URL=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/<ver>/android-studio-<ver>-linux.tar.gz \
-  distrobox enter android -- /etc/nixos/android-dev/install-android-studio.sh
+  /etc/nixos/android-dev/install-android-studio.sh
 ```
 
 Тем же скриптом Studio обновляется (настройки и плагины лежат в
@@ -123,7 +128,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ```bash
 distrobox assemble create --replace --file /etc/nixos/android-dev/distrobox.ini
-distrobox enter android -- /etc/nixos/android-dev/install-android-studio.sh
+/etc/nixos/android-dev/install-android-studio.sh
 ```
 
 **Другая JDK для Gradle.** Замените `openjdk-17-jdk-headless` на

@@ -3,18 +3,20 @@
 # exports it to the host's application menu.
 #
 # Run from the host:
-#   distrobox enter android -- /etc/nixos/android-dev/install-android-studio.sh
+#   /etc/nixos/android-dev/install-android-studio.sh
 #
 # The tarball URL is scraped from developer.android.com. To pin a version or
 # install a preview build, pass the URL explicitly:
 #   ANDROID_STUDIO_URL=https://.../android-studio-<ver>-linux.tar.gz \
-#     distrobox enter android -- /etc/nixos/android-dev/install-android-studio.sh
+#     /etc/nixos/android-dev/install-android-studio.sh
 set -euo pipefail
 
+# On the host: re-run inside the container. The container has its own /etc,
+# so /etc/nixos is not there; the host filesystem is mounted at /run/host.
 if [ -z "${CONTAINER_ID:-}" ]; then
-  echo "Run this inside the distrobox:" >&2
-  echo "  distrobox enter android -- $0" >&2
-  exit 1
+  exec distrobox enter android -- \
+    env ANDROID_STUDIO_URL="${ANDROID_STUDIO_URL:-}" \
+    bash "/run/host$(realpath "$0")"
 fi
 
 install_dir="$HOME/.local/share/android-studio"
