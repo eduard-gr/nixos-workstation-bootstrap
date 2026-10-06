@@ -77,7 +77,17 @@ icon="$install_dir/bin/studio.svg"
 [ -f "$icon" ] || icon="$install_dir/bin/studio.png"
 
 # A stable command name inside the container, whatever the launcher is called.
-sudo ln -sf "$launcher" /usr/local/bin/android-studio
+# A wrapper rather than a symlink: the host menu entry runs it through a
+# non-login shell, which skips /etc/profile.d, so Studio (and the emulator it
+# spawns) would otherwise miss ANDROID_USER_HOME/ANDROID_AVD_HOME and the Qt
+# settings below.
+sudo rm -f /usr/local/bin/android-studio
+sudo tee /usr/local/bin/android-studio >/dev/null <<EOF
+#!/bin/sh
+. /etc/profile.d/android.sh
+exec "$launcher" "\$@"
+EOF
+sudo chmod 755 /usr/local/bin/android-studio
 
 mkdir -p "$sdk_dir" "$HOME/.android/avd"
 
@@ -91,6 +101,12 @@ export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 export PATH="$install_dir/bin:\$ANDROID_HOME/emulator:\$ANDROID_HOME/platform-tools:\$ANDROID_HOME/cmdline-tools/latest/bin:\$PATH"
 # IntelliJ-based IDEs under a Wayland compositor (KDE Plasma 6, via XWayland).
 export _JAVA_AWT_WM_NONREPARENTING=1
+# The emulator ships its own Qt with only an xcb platform plugin. The host
+# session leaks QT_QPA_PLATFORM=wayland and a QT_PLUGIN_PATH full of Qt from
+# /nix/store into the container; either one makes qemu-system-x86_64 abort in
+# QGuiApplicationPrivate::createPlatformIntegration.
+export QT_QPA_PLATFORM=xcb
+unset QT_PLUGIN_PATH QT_WAYLAND_RECONNECT
 EOF
 
 # A desktop entry inside the container, so distrobox-export can put a
