@@ -27,6 +27,7 @@
     ../../tools/multimedia.nix
     ../../tools/3d.nix
     ../../tools/kvm.nix
+    ../../tools/android.nix
     ../../tools/python.nix
     ../../tools/frontend.nix
 

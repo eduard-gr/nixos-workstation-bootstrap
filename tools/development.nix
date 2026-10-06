@@ -29,12 +29,6 @@
     protobuf
     protoc-gen-grpc-java
 
-    # adb, fastboot, mke2fs. Android work itself happens inside the per-project
-    # FHS environment (android-dev/), which ships its own platform-tools, but
-    # having adb on PATH outside it means a plugged-in phone can be queried from
-    # any terminal without first cd'ing into a project.
-    android-tools
-
     gnumake
 
     # Escape hatch for running a foreign binary without entering a project
@@ -44,8 +38,8 @@
 
   # Lets unpatched, downloaded binaries run outside an FHS sandbox — a Gradle
   # wrapper pulling aapt2 from Maven, a vendored node/python toolchain, a
-  # release artifact from a CI job. Inside android-dev/ this is redundant
-  # (buildFHSEnv provides a real /lib64); outside it, this is what stands in.
+  # release artifact from a CI job. (Android tooling does not rely on this: it
+  # runs in the distrobox from tools/android.nix.)
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     stdenv.cc.cc
