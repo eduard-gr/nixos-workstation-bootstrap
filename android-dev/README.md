@@ -65,12 +65,16 @@ ANDROID_STUDIO_URL=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/<v
 
 ### 3. Первый запуск
 
+Скрипт создаёт в контейнере команду `android-studio` — ссылку на запускатель
+из `~/.local/share/android-studio/bin/` (в новых версиях это `studio`, в
+старых `studio.sh`).
+
 **Android Studio** появляется в меню KDE (ярлык запускает её в контейнере).
 Из терминала:
 
 ```bash
-distrobox enter android      # шелл в контейнере, переменные уже выставлены
-studio.sh
+distrobox enter android -- android-studio
+# или: distrobox enter android, затем android-studio
 ```
 
 В мастере первого запуска выберите **Custom** → SDK location: `~/Android/Sdk`.
