@@ -52,10 +52,12 @@ distrobox assemble create --file /etc/nixos/android-dev/distrobox.ini
 свой `/etc`, хостовый виден только как `/run/host/etc`, и путь не найдётся.
 
 Скрипт берёт ссылку на последний tarball со страницы
-developer.android.com/studio. Конкретную версию можно задать явно:
+developer.android.com/studio (имя файла `android-studio-<ver>-linux.tar.gz`,
+где `<ver>` — номер версии в старых релизах или кодовое имя вроде `rabbit1` в
+новых). Конкретную версию можно задать явно:
 
 ```bash
-ANDROID_STUDIO_URL=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/<ver>/android-studio-<ver>-linux.tar.gz \
+ANDROID_STUDIO_URL=https://edgedl.me.gvt1.com/android/studio/ide-zips/<ver>/android-studio-<name>-linux.tar.gz \
   /etc/nixos/android-dev/install-android-studio.sh
 ```
 
@@ -163,6 +165,14 @@ rm -rf ~/.local/share/android-studio ~/.local/bin/{adb,fastboot}
 `tools/android.nix` не подключён в `imports` хоста или не сделан `nixos-rebuild switch`.
 
 **Ярлык в меню не появился** — перелогиньтесь или выполните `kbuildsycoca6`.
+
+**`Could not find the Android Studio download URL`** — Google изменил формат
+ссылки на странице загрузки. Возьмите ссылку на Linux-tarball со страницы
+developer.android.com/studio вручную и передайте её через `ANDROID_STUDIO_URL`.
+
+**Скрипт в `/etc/nixos` отличается от репозитория** — `/etc/nixos` это
+отдельный клон того же GitHub-репозитория. После push из рабочей копии
+выполните в нём `sudo git pull`, иначе запустится старая версия скрипта.
 
 **Эмулятор: `/dev/kvm permission denied`** — пользователь не в группе `kvm`
 (после добавления нужен перелогин), проверьте `id` на хосте.

@@ -5,8 +5,11 @@
 # Run from the host:
 #   /etc/nixos/android-dev/install-android-studio.sh
 #
-# The tarball URL is scraped from developer.android.com. To pin a version or
-# install a preview build, pass the URL explicitly:
+# The tarball URL is scraped from developer.android.com. The version token in
+# the file name is numeric in older releases and a codename in newer ones
+# (android-studio-2024.3.1.14-linux.tar.gz, android-studio-rabbit1-linux.tar.gz),
+# so the pattern only fixes the android-studio-...-linux.tar.gz shape.
+# To pin a version or install a preview build, pass the URL explicitly:
 #   ANDROID_STUDIO_URL=https://.../android-studio-<ver>-linux.tar.gz \
 #     /etc/nixos/android-dev/install-android-studio.sh
 set -euo pipefail
@@ -25,7 +28,7 @@ sdk_dir="$HOME/Android/Sdk"
 url="${ANDROID_STUDIO_URL:-}"
 if [ -z "$url" ]; then
   url="$(curl -fsSL https://developer.android.com/studio \
-    | grep -oE 'https://[^"]+/android-studio-[0-9.]+-linux\.tar\.gz' \
+    | grep -oE 'https://[^"]+/android-studio-[^"/]+-linux\.tar\.gz' \
     | head -n1)"
 fi
 if [ -z "$url" ]; then
