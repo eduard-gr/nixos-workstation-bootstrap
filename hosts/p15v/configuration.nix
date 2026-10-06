@@ -95,6 +95,12 @@ in
     "nvme_core.default_ps_max_latency_us=0"
     "pcie_aspm=off"
     "iommu=soft"
+
+    # Freeze debugging (added 2026-10-06 after a series of hard hangs that left
+    # nothing in the journal — six unclean shutdowns since 2026-07-20). The NMI
+    # watchdog panics on a hard lockup so the oops lands in EFI pstore
+    # (/sys/fs/pstore) instead of vanishing. Costs one hw-PMU counter.
+    "nmi_watchdog=1"
   ];
 
   # Load amdgpu in the initrd so the iGPU (the boot/display GPU in this PRIME
@@ -140,7 +146,11 @@ in
     # Better suspend/hibernate handling and runtime power-off in PRIME offload.
     powerManagement = {
       enable = true;
-      finegrained = true;
+      # TEMPORARILY disabled 2026-10-06: suspect for the recurring hard hangs
+      # (several happened while idle or entering s2idle, i.e. with the dGPU in
+      # RTD3 D3cold). Keeps the card powered on at all times. Re-enable after a
+      # week or two without freezes to confirm or clear it.
+      finegrained = false;
       kernelSuspendNotifier = true;
     };
 
@@ -213,6 +223,11 @@ in
 
   boot.kernel.sysctl = {
     "user.max_user_namespaces" = 28633;
+
+    # Freeze debugging, pairs with nmi_watchdog=1 in kernelParams: panic (and
+    # thereby record to pstore) when a task sits in D state for longer than
+    # hung_task_timeout_secs (default 120s) instead of silently hanging.
+    "kernel.hung_task_panic" = 1;
   };
 
   nix.gc = {
