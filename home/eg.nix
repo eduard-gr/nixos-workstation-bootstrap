@@ -1,4 +1,4 @@
-{ pkgs, inputs, qidi-studio, ... }:
+{ pkgs, lib, inputs, qidi-studio, ... }:
 
 {
   home = {
@@ -248,10 +248,10 @@
 
       };
 
-  #    node = {
-  #      path = lib.getExe pkgs.nodejs;
-  #      npm_path = lib.getExe' pkgs.nodejs "npm";
-  #    };
+      node = {
+        path = lib.getExe pkgs.nodejs;
+        npm_path = lib.getExe' pkgs.nodejs "npm";
+      };
 
       journal ={
         hour_format = "hour24";
