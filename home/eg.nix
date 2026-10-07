@@ -190,6 +190,7 @@
       "dockerfile"
       "html"
       "xml"
+      "vue"
       "Elixir"
       "HEEX"
       "sql"
@@ -205,10 +206,18 @@
           "ctrl-v" = "editor::Paste";
           "ctrl-x" = "editor::Cut";
           "ctrl-s" = "workspace::Save";
-          "ctrl-shift-u" = "editor::ConvertToOppositeCase";
           "ctrl-shift-f6" = "editor::Rename";
           "Ctrl-+" = "editor::ToggleCodeActions";
           #"ctrl-shift-f" = "workspace::SearchInWorkspace";
+        };
+      }
+      {
+        context = "Editor";
+        bindings = {
+          # Overrides the VSCode keymap's ctrl-d (editor::SelectNext).
+          "ctrl-d" = "editor::DuplicateLineDown";
+          # Toggles the case of the selection (upper <-> lower).
+          "ctrl-shift-u" = "editor::ConvertToOppositeCase";
         };
       }
     ];
@@ -288,6 +297,8 @@
         blinking = "off";
         copy_on_select = false;
         dock = "bottom";
+        # Open the terminal panel automatically when a workspace opens.
+        starts_open = true;
         detect_venv = {
           on = {
             directories = [ ".env" "env" ".venv" "venv" ];
@@ -313,7 +324,14 @@
         working_directory = "current_project_directory";
       };
 
-      languages = {
+      languages = let
+        prettier = {
+          external = {
+            command = "prettier";
+            arguments = [ "--stdin-filepath" "{buffer_path}" ];
+          };
+        };
+      in {
         PHP = {
           tab_size = 4;
           hard_tabs = true;
@@ -335,17 +353,29 @@
           format_on_save = "on";
         };
 
+        # JS/TS/TSX are built into Zed; vtsls (tools/frontend.nix) is the
+        # default language server and is picked up from PATH. Vue comes from
+        # the "vue" extension, which installs @vue/language-server and the
+        # @vue/typescript-plugin itself via the node configured above and
+        # wires the plugin into vtsls, so .vue files get TS completions too.
         JavaScript = {
           tab_size = 2;
-          formatter = {
-            external = {
-              command = "prettier";
-              arguments = [
-                  "--stdin-filepath"
-                  "{buffer_path}"
-              ];
-            };
-          };
+          formatter = prettier;
+        };
+
+        TypeScript = {
+          tab_size = 2;
+          formatter = prettier;
+        };
+
+        TSX = {
+          tab_size = 2;
+          formatter = prettier;
+        };
+
+        Vue = {
+          tab_size = 2;
+          formatter = prettier;
         };
 
         "HEEX" = {
@@ -366,6 +396,22 @@
       };
 
       lsp = {
+        vtsls = {
+          settings = let
+            inlayHints = {
+              parameterNames.enabled = "all";
+              parameterTypes.enabled = true;
+              variableTypes.enabled = true;
+              propertyDeclarationTypes.enabled = true;
+              functionLikeReturnTypes.enabled = true;
+              enumMemberValues.enabled = true;
+            };
+          in {
+            typescript = { inherit inlayHints; };
+            javascript = { inherit inlayHints; };
+          };
+        };
+
         intelephense = {
         settings = {
           files = {

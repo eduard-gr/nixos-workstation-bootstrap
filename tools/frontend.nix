@@ -10,6 +10,7 @@
     # TypeScript compiler + language servers (ts/js, html/css/json/eslint)
     # so Zed and other editors have them without a per-project install.
     typescript
+    vtsls                        # Zed's default TS/JS server
     typescript-language-server
     vscode-langservers-extracted
 

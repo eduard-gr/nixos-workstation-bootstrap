@@ -16,5 +16,10 @@
       all.amqp
     ]))
     php83Packages.composer
+
+    # PHP language servers for Zed's "php" extension, which prefers binaries
+    # found on PATH over downloading its own copies.
+    intelephense
+    phpactor
   ];
 }
