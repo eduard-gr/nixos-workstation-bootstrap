@@ -100,6 +100,10 @@ in
     # nothing in the journal — six unclean shutdowns since 2026-07-20). The NMI
     # watchdog panics on a hard lockup so the oops lands in EFI pstore
     # (/sys/fs/pstore) instead of vanishing. Costs one hw-PMU counter.
+    # NOTE: this parameter alone is NOT enough — TLP's default NMI_WATCHDOG=0
+    # switches the detector back off at boot (found 2026-10-07: sysctl
+    # kernel.nmi_watchdog read 0 despite this flag, so the 17:35 freeze left
+    # pstore empty). services.tlp.settings.NMI_WATCHDOG below keeps it on.
     "nmi_watchdog=1"
   ];
 
@@ -148,11 +152,22 @@ in
       enable = true;
       # TEMPORARILY disabled 2026-10-06: suspect for the recurring hard hangs
       # (several happened while idle or entering s2idle, i.e. with the dGPU in
-      # RTD3 D3cold). Keeps the card powered on at all times. Re-enable after a
-      # week or two without freezes to confirm or clear it.
+      # RTD3 D3cold). Re-enable after a week or two without freezes to confirm
+      # or clear it.
+      # On its own this does NOT keep the card powered: it merely drops the
+      # explicit NVreg_DynamicPowerManagement=0x02, and the driver default (3 =
+      # "auto") still enables fine-grained RTD3 on Ampere laptops. Verified
+      # 2026-10-07: /proc/driver/nvidia/gpus/*/power reported "Runtime D3
+      # status: Enabled (fine-grained)" and the A2000 sat in D3cold while the
+      # freeze happened. Hence the explicit 0x00 in moduleParams below.
       finegrained = false;
       kernelSuspendNotifier = true;
     };
+
+    # Pin RTD3 off explicitly (see powerManagement.finegrained above). Flip to
+    # "0x02" (or finegrained = true) to re-enable runtime power-off. Check with:
+    #   cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_status  -> active
+    moduleParams.nvidia.NVreg_DynamicPowerManagement = "0x00";
 
     # The P15v Gen 3 AMD advertises NVIDIA Dynamic Boost 2.0 support.
     dynamicBoost.enable = true;
@@ -204,7 +219,14 @@ in
   services.acpid.enable = true;
 
   # Power management
-  services.tlp.enable = true;
+  services.tlp = {
+    enable = true;
+    settings = {
+      # TLP defaults to NMI_WATCHDOG=0 and would silently undo the
+      # nmi_watchdog=1 kernel parameter above (freeze debugging).
+      NMI_WATCHDOG = 1;
+    };
+  };
   services.power-profiles-daemon.enable = lib.mkForce false;
 
   # Fingerprint reader
