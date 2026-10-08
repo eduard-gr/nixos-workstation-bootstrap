@@ -218,6 +218,10 @@
           "ctrl-d" = "editor::DuplicateLineDown";
           # Toggles the case of the selection (upper <-> lower).
           "ctrl-shift-u" = "editor::ConvertToOppositeCase";
+          # JetBrains-style rename of the symbol under the cursor (LSP rename).
+          "shift-f6" = "editor::Rename";
+          # JetBrains-style block comment toggle (/* ... */) for the selection.
+          "ctrl-shift-/" = "editor::ToggleBlockComments";
         };
       }
     ];
