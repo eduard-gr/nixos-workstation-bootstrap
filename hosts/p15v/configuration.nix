@@ -97,13 +97,18 @@ in
     "iommu=soft"
 
     # Freeze debugging (added 2026-10-06 after a series of hard hangs that left
-    # nothing in the journal — six unclean shutdowns since 2026-07-20). The NMI
-    # watchdog panics on a hard lockup so the oops lands in EFI pstore
-    # (/sys/fs/pstore) instead of vanishing. Costs one hw-PMU counter.
-    # NOTE: this parameter alone is NOT enough — TLP's default NMI_WATCHDOG=0
+    # nothing in the journal — six unclean shutdowns since 2026-07-20). Enables
+    # the perf-based hard-lockup detector. Costs one hw-PMU counter.
+    # NOTE 1: this parameter alone is NOT enough — TLP's default NMI_WATCHDOG=0
     # switches the detector back off at boot (found 2026-10-07: sysctl
     # kernel.nmi_watchdog read 0 despite this flag, so the 17:35 freeze left
     # pstore empty). services.tlp.settings.NMI_WATCHDOG below keeps it on.
+    # NOTE 2: the detector by itself only *prints* a warning to dmesg, which
+    # never reaches disk when the whole machine is dead (2026-10-08 20:33 freeze
+    # with this flag live: pstore still empty). It panics — and thereby dumps
+    # dmesg into EFI pstore — only with kernel.hardlockup_panic=1, set in
+    # boot.kernel.sysctl below (CONFIG_BOOTPARAM_HARDLOCKUP_PANIC is unset in
+    # the nixpkgs kernel).
     "nmi_watchdog=1"
   ];
 
@@ -250,7 +255,24 @@ in
     # thereby record to pstore) when a task sits in D state for longer than
     # hung_task_timeout_secs (default 120s) instead of silently hanging.
     "kernel.hung_task_panic" = 1;
+
+    # 2026-10-09: the 9th freeze (2026-10-08 20:33, generation 12, RTD3 off,
+    # nmi_watchdog on, machine actively in use) left pstore empty because the
+    # lockup detectors only warn by default. Make a detected hard or soft lockup
+    # panic, so the dump lands in /sys/fs/pstore, and auto-reboot 30 s after any
+    # panic instead of sitting on a frozen desktop forever (kernel.panic=0).
+    "kernel.hardlockup_panic" = 1;
+    "kernel.softlockup_panic" = 1;
+    "kernel.panic" = 30;
   };
+
+  # Hardware watchdog (SP5100 TCO, /dev/watchdog0, module sp5100_tco is already
+  # loaded but idle). systemd pets it every runtimeTime/2; if the kernel stops
+  # scheduling entirely — a platform/firmware hang the NMI watchdog cannot see —
+  # the TCO resets the machine. Diagnostic value: a TCO reboot with an EMPTY
+  # pstore afterwards means the hang is below the kernel (SMI/firmware/PCIe),
+  # a non-empty pstore means a kernel-level lockup with a backtrace to read.
+  systemd.watchdog.runtimeTime = "30s";
 
   nix.gc = {
     automatic = true;
