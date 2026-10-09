@@ -11,6 +11,21 @@ let
   # Generated on the target laptop by detect-gpu-bus-ids.sh.
   # PRIME cannot be configured safely without the real PCI addresses.
   gpuBusIds = import ../../gpu-bus-ids.nix;
+
+  # Freeze #10 (2026-10-09 10:49) hung on an s2idle cycle with the SP5100 TCO
+  # watchdog planned at 30 s. It is NOT verified that the TCO stops counting
+  # while the SoC sits in S0ix — if it keeps running, every sleep longer than
+  # 30 s ends in a watchdog reset that looks exactly like a freeze (new boot,
+  # journal ending at "PM: suspend entry", pstore empty).
+  # TEST (once, after switching to a generation with the watchdog live):
+  #   systemctl show -p RuntimeWatchdogUSec        -> 30s
+  #   cat /sys/class/watchdog/watchdog0/state      -> active
+  #   systemctl suspend ; wait >= 2 min ; wake up
+  #   journalctl -b | grep 'PM: suspend exit'      -> present = TCO is safe
+  # If instead the laptop rebooted during that sleep, set this to true: the
+  # watchdog is then disarmed in pre-sleep and re-armed right after resume
+  # (hangs inside the s2idle entry/exit path are left to pm_trace below).
+  pauseWatchdogDuringSleep = false;
 in
 {
   imports = [
@@ -272,7 +287,44 @@ in
   # the TCO resets the machine. Diagnostic value: a TCO reboot with an EMPTY
   # pstore afterwards means the hang is below the kernel (SMI/firmware/PCIe),
   # a non-empty pstore means a kernel-level lockup with a backtrace to read.
-  systemd.watchdog.runtimeTime = "30s";
+  systemd.settings.Manager.RuntimeWatchdogSec = "30s";
+
+  # ---------------------------------------------------------------------------
+  # s2idle hang capture (2026-10-09, after freeze #10 which hung either while
+  # entering s2idle or on the following wake — journald is frozen before the
+  # device suspend phase, so the journal cannot tell the two apart).
+  #
+  # /sys/power/pm_trace (CONFIG_PM_TRACE_RTC, present on this kernel): while
+  # set, the kernel stores a hash of the device currently being suspended or
+  # resumed in the RTC CMOS at every step. After a hang + power cycle the
+  # NEXT boot prints which device it was:
+  #   journalctl -b -k | grep -iE 'Magic number|hash matches'
+  # Side effect: the RTC holds garbage after every cycle. The running clock is
+  # unaffected (TSC is a nonstop clocksource and the kernel refuses to read an
+  # "abused" RTC), and systemd-timesyncd rewrites the RTC on its next NTP
+  # sync — the resume hook forces that sync immediately. After a crash reboot
+  # the clock may be a few minutes stale until NTP answers.
+  #
+  # powerDownCommands run in sleep-actions.service before sleep.target;
+  # resumeCommands run when that unit is stopped, i.e. right after resume.
+  # ---------------------------------------------------------------------------
+  powerManagement.powerDownCommands = ''
+    if [ -w /sys/power/pm_trace ]; then
+      echo 1 > /sys/power/pm_trace
+    fi
+  ''
+  + lib.optionalString pauseWatchdogDuringSleep ''
+    busctl set-property org.freedesktop.systemd1 /org/freedesktop/systemd1 \
+      org.freedesktop.systemd1.Manager RuntimeWatchdogUSec t 0 || true
+  '';
+
+  powerManagement.resumeCommands = ''
+    systemctl restart systemd-timesyncd.service || true
+  ''
+  + lib.optionalString pauseWatchdogDuringSleep ''
+    busctl set-property org.freedesktop.systemd1 /org/freedesktop/systemd1 \
+      org.freedesktop.systemd1.Manager RuntimeWatchdogUSec t 30000000 || true
+  '';
 
   nix.gc = {
     automatic = true;
