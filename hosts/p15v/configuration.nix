@@ -26,6 +26,19 @@ let
   # watchdog is then disarmed in pre-sleep and re-armed right after resume
   # (hangs inside the s2idle entry/exit path are left to pm_trace below).
   pauseWatchdogDuringSleep = false;
+
+  # EXPERIMENT started 2026-10-12 (see FREEZE-PLAN.md next to this file).
+  # Across the 20 retained boots every one of the 8 freezes happened 13 min to
+  # 2 h 12 min AFTER a resume from s2idle, and none in the 9.6 h of uptime that
+  # preceded the first sleep of a boot. The hang is below the kernel (pstore
+  # empty, NMI detector silent, TCO counts but its reset never acts), so the
+  # cheapest test is to stop suspending altogether: AllowSuspend=no makes
+  # logind answer CanSuspend "no" (PowerDevil then hides/skips sleep), the
+  # suspend targets are masked as a second barrier, and the lid locks the
+  # screen instead. home/p15v-power.nix sets the matching PowerDevil policy.
+  # Set back to false after the trial; until then the machine must never
+  # reach "PM: suspend entry" in the journal.
+  suspendDisabled = true;
 in
 {
   imports = [
@@ -398,14 +411,30 @@ in
   # ---------------------------------------------------------------------------
 
   # Suspend first, then hibernate after the configured delay. These only apply
-  # outside a Plasma session — see checklist item 2.
-  services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
+  # outside a Plasma session — see checklist item 2. While suspendDisabled is
+  # set the lid only locks the screen (logind side; PowerDevil is configured
+  # the same way in home/p15v-power.nix).
+  services.logind.settings.Login.HandleLidSwitch =
+    if suspendDisabled then "lock" else "suspend-then-hibernate";
+  services.logind.settings.Login.HandleLidSwitchExternalPower =
+    lib.mkIf suspendDisabled "lock";
   services.logind.settings.Login.HandlePowerKey = "hibernate";
   services.logind.settings.Login.HandlePowerKeyLongPress = "poweroff";
 
   systemd.sleep.settings.Sleep = {
     HibernateDelaySec = "30m";
     SuspendState = "mem";
+    # logind reads this: CanSuspend -> "no", every Suspend() request is
+    # refused (also implies AllowSuspendThenHibernate=no, AllowHybridSleep=no).
+    AllowSuspend = lib.mkIf suspendDisabled "no";
+  };
+
+  # Second barrier: even `systemctl suspend` as root fails on a masked target.
+  # hibernate.target and sleep.target stay untouched.
+  systemd.targets = lib.mkIf suspendDisabled {
+    suspend.enable = false;
+    hybrid-sleep.enable = false;
+    suspend-then-hibernate.enable = false;
   };
 
   # Keep the value from the installed system. Do not change it merely because

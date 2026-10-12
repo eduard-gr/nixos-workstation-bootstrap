@@ -93,7 +93,9 @@
                 inherit inputs qidi-studio;
               };
 
-              users.eg = import ./home/eg.nix;
+              users.eg = {
+                imports = [ ./home/eg.nix ./home/p15v-power.nix ];
+              };
             };
           }
         ];

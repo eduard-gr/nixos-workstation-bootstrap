@@ -27,7 +27,7 @@ There is no linter. To sanity-check a change without switching, use `nixos-rebui
 
 ## Architecture
 
-`flake.nix` defines two `nixosConfigurations` (`l14`, `p15v`). Both wire in `home-manager` as a NixOS module (users.eg → `home/eg.nix`) and pass `inputs` plus a locally-defined `qidi-studio` AppImage package through `extraSpecialArgs`. Adding a third host means adding another entry here that imports its own `hosts/<name>/configuration.nix`.
+`flake.nix` defines two `nixosConfigurations` (`l14`, `p15v`). Both wire in `home-manager` as a NixOS module (users.eg → `home/eg.nix`; `p15v` additionally imports `home/p15v-power.nix`, the no-suspend PowerDevil policy of the freeze trial described in `hosts/p15v/FREEZE-PLAN.md`) and pass `inputs` plus a locally-defined `qidi-studio` AppImage package through `extraSpecialArgs`. Adding a third host means adding another entry here that imports its own `hosts/<name>/configuration.nix`.
 
 Configuration is composed by import, split into four layers:
 
