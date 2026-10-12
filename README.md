@@ -68,6 +68,7 @@ nixos-generate-config --root /mnt
 
 git add -f gpu-bus-ids.nix
 git add -f hardware-configuration.nix
+git add -f flake.lock
 
 nixos-install --flake .#my-host-name --root /mnt
 ```
