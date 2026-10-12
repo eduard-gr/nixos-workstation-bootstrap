@@ -1,2 +1,3 @@
 hardware-configuration.nix
 gpu-bus-ids.nix
+flake.lock
