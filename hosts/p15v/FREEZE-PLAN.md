@@ -44,7 +44,7 @@ Status as of 2026-10-12. Twelve hard freezes since 2026-07-20, the last one
    Verify after the switch:
    ```
    systemctl show -p AllowSuspend  # not exposed; use the next two instead
-   busctl get-property org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager CanSuspend   # "no"
+   busctl call org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager CanSuspend   # s "no" (a method, not a property)
    systemctl is-enabled suspend.target                                                                            # masked
    journalctl -b -k | grep -c 'PM: suspend entry'                                                                 # must stay 0
    ```
