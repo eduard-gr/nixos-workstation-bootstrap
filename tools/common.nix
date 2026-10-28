@@ -42,5 +42,6 @@
     pavucontrol
     #wakeonlan
     obsidian
+    talosctl
   ];
 }
