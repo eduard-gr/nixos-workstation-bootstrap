@@ -1,0 +1,22 @@
+# Hooks run on `git commit`. The dev shell (flake.nix) installs them
+# automatically; run against the whole repo with `pre-commit run -a`.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-yaml
+        # Kubernetes manifests often hold several documents separated by `---`.
+        args: [--allow-multiple-documents]
+        # Helm chart templates are Go templates, not valid YAML.
+        exclude: ^(.*/)?templates/
+
+  # gitleaks comes from the flake (version pinned by flake.lock), so no Go
+  # toolchain is needed and pre-commit does not build it from source.
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: gitleaks
+        entry: gitleaks git --pre-commit --staged --redact --verbose
+        language: system
+        pass_filenames: false

@@ -57,6 +57,15 @@
     };
 
   in {
+    # Per-project dev environment templates:
+    #   nix flake init -t /etc/nixos#gitops
+    templates = {
+      gitops = {
+        path = ./templates/gitops;
+        description = "direnv + flake shell with talosctl, kubectl, helm, k9s, kustomize, ...";
+      };
+    };
+
     nixosConfigurations = {
 
       l14 = nixpkgs.lib.nixosSystem {

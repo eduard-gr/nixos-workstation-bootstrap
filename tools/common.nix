@@ -42,6 +42,6 @@
     pavucontrol
     #wakeonlan
     obsidian
-    talosctl
+    #talosctl use tempalte/gitops
   ];
 }
