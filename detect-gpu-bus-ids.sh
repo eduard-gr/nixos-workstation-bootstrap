@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-result="./gpu-bus-ids.nix"
+# Always write next to the p15v host config, wherever the script is run from.
+result="$(dirname "$(readlink -f "$0")")/hosts/p15v/gpu-bus-ids.nix"
 
 if ! command -v lspci >/dev/null 2>&1; then
   echo "lspci is not available. Run through: nix shell nixpkgs#pciutils -c bash $0" >&2
@@ -48,3 +49,5 @@ cat > "$result" <<EOF_NIX
   nvidiaBusId = "${nvidia_bus_id}";
 }
 EOF_NIX
+
+echo "Wrote $result"

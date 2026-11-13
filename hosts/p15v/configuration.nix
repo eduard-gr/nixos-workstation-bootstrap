@@ -10,7 +10,7 @@
 let
   # Generated on the target laptop by detect-gpu-bus-ids.sh.
   # PRIME cannot be configured safely without the real PCI addresses.
-  gpuBusIds = import ../../gpu-bus-ids.nix;
+  gpuBusIds = import ./gpu-bus-ids.nix;
 
   # Freeze #10 (2026-10-09 10:49) hung on an s2idle cycle with the SP5100 TCO
   # watchdog planned at 30 s. It is NOT verified that the TCO stops counting
@@ -42,7 +42,7 @@ let
 in
 {
   imports = [
-    ../../hardware-configuration.nix
+    ./hardware-configuration.nix
 
     ../../general/i18n.nix
     ../../general/pipewire.nix
@@ -79,7 +79,7 @@ in
         # detect-gpu-bus-ids.sh bug did exactly that), never a valid PRIME pair.
         && gpuBusIds.amdgpuBusId != gpuBusIds.nvidiaBusId;
       message = ''
-        Fill gpu-bus-ids.nix with the real AMD and NVIDIA PCI Bus IDs
+        Fill hosts/p15v/gpu-bus-ids.nix with the real AMD and NVIDIA PCI Bus IDs
         (they must be non-empty and different). Run on the ThinkPad P15v:
           nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh
       '';

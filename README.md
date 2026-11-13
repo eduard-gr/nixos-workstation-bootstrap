@@ -64,10 +64,12 @@ git clone... /mnt/etc/nixos
 
 #### Config
 ```bash
-nixos-generate-config --root /mnt
+cd /mnt/etc/nixos
 
-git add -f gpu-bus-ids.nix
-git add -f hardware-configuration.nix
+# machine-specific files live in the host directory (gitignored, hence -f)
+nixos-generate-config --root /mnt --show-hardware-config > hosts/my-host-name/hardware-configuration.nix
+git add -f hosts/my-host-name/hardware-configuration.nix
+
 git add -f flake.lock
 
 nixos-install --flake .#my-host-name --root /mnt
@@ -84,6 +86,7 @@ nixos-enter --root /mnt -c 'passwd alice'
 PRIME for Radeon + Nvidea
 nix shell nixpkgs#pciutils -c bash ./detect-gpu-bus-ids.sh
 # saves hosts/p15v/gpu-bus-ids.nix
+git add -f hosts/p15v/gpu-bus-ids.nix
 
 
 ### Maintanence NixOS
