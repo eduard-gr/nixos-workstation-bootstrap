@@ -30,8 +30,9 @@
     ../../tools/android.nix
     ../../tools/python.nix
     ../../tools/frontend.nix
-
     ../../tools/agentic.nix
+
+    ../../tools/printing.nix
   ];
 
   # Use latest kernel.
